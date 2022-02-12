@@ -1,0 +1,22 @@
+GET http://localhost:8000/users
+
+###
+
+POST http://localhost:8000/users/register
+Content-Type: application/json
+
+{
+    "name": "alpha",
+    "password": "beta"
+}
+
+###
+
+
+POST http://localhost:8000/users/login
+Content-Type: application/json
+
+{
+    "username": "alpha",
+    "password": "beta"
+}
