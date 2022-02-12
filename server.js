@@ -1,4 +1,5 @@
 const express = require("express"); //Node Framework
+const dotenv = require("dotenv").config() // Used for environment variables
 const app = express(); // Application entry
 const session = require('express-session'); // Manage login sessions
 const sql = require('mssql'); // Database access 
@@ -6,6 +7,11 @@ const path = require('path'); // Utility
 const bcrypt = require("bcrypt") // Cryptography
 const bodyParser = require("body-parser"); // JSON parser
 const { response } = require("express");
+const SerpApi = require("google-search-results-nodejs")
+
+var search = new SerpApi.GoogleSearch(process.env.REVIEW_API_KEY)
+
+const PORT = process.env.PORT || 8000; // Port setup
 
 const users = [] // For testing, not used
 
@@ -15,6 +21,7 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true
 }));
+
 // Express setup
 app.use(express.json()); // Allows express to use JSON requests
 app.use(express.urlencoded({ extended: true })); // Allows express to use HTML form POST
@@ -54,6 +61,29 @@ app.get('/', (req, res) => {
         res.send('Welcome back, ' + req.session.username + '!')
     } else {
         res.send('Please login to view this page.')
+    }
+})
+
+// Route to receive reviews from every site in profile
+app.get('/reviews', (req, res) => {
+    if (true/* googleReviews = true*/ ){ // For google reviews, will edit later as this is our only one right now
+        const params = { // Set up the parameters to use, these default ones should work the best
+            engine: "google_maps_reviews",
+            data_id: "0x89c259a61c75684f:0x79d31adb123348d2",
+            sortBy: "qualityScore"
+        }
+        
+        // Do the search and receive 10 results
+        search.json(params, function(reviews) {
+            res.json(reviews['reviews'])
+        })
+        
+    }
+})
+
+app.get('/dashboard', (req, res) => {
+    if (req.session.loggedin){
+        res.sendFile(path.join(__dirname + '/dashboard.html'));
     }
 })
 
@@ -127,6 +157,7 @@ app.post('/users/login', async (req, res) => {
 })
 
 // Starts server
-app.listen(8000, () => {
-    console.log("Listening on port 8000.")
+app.listen(PORT, () => {
+    console.log(process.env.REVIEW_API_KEY)
+    console.log(`Listening on port ${PORT}`)
 });
