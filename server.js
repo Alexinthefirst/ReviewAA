@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'static'))) // Allow express to use 
 var config = {
     user: 'raa',
     password: '!ReviewAA1',
-    server: 'BANGDITO\\SQLEXPRESS',
+    server: process.env.SERVER_NAME,
     database: 'ReviewAA',
     trustServerCertificate: true
 };
