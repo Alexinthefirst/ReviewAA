@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1">
+		<title>Choose a package</title>
+        <!-- the form awesome library is used to add icons to our form -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+        <!-- include the stylesheet file -->
+        <link href="/style.css" rel="stylesheet" type="text/css">
+
+        <style>
+            /* Split the screen in half */
+            .split {
+            height: 100%;
+            width: 50%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+            }
+
+            /* Control the left side */
+            .left {
+            left: 0;
+            background-color: #c8d8e4;
+            }
+
+            /* Control the right side */
+            .right {
+            right: 0;
+            background-color: #52ab98;
+            }
+
+            .left div:hover{
+                border-style: solid;
+            }
+
+            .right div:hover{
+                border-style: solid;
+            }
+
+            /* If you want the content centered horizontally and vertically */
+            .centered {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                width: 400px;
+                height: 400px;
+                padding: 20px;
+            }
+
+            .centered h1 {
+                text-align: center;
+                margin-bottom: 50px;
+                font-size: 200%;
+            }
+            .centered li{
+                margin-bottom: 10px;
+            }
+            .colour{
+                color: black;
+            }
+        </style>
+	</head>
+	<body>
+
+		<div class="packages">
+			<h1>Packages</h1>
+            <a href="/payment" class="colour">
+                <div class="split left">
+                    <div class="centered">
+                    <h1>Basic Reporting</h1>
+                    <ul>
+                        <li>Base level reporting</li>
+                        <li>Many types of reports for your product's reviews</li>
+                        <li>See reviews on your competitor's products</li>
+                        <li>Easy to use dashboard for all your features</li>
+                    </ul><br>
+
+                    <h1>$4.99</h1>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="/payment" class="colour">
+                <div class="split right">
+                    <div class="centered">
+                    <h1>Advanced Reporting</h1>
+                    <ul>
+                        <li>Advanced reporting systems</li>
+                        <li>View reports with fake review detection</li>
+                        <li>Counter against bot reviews left on your product</li>
+                        <li>Easy to use dashboard for all your features</li>
+                    </ul><br>
+
+                    <h1>$14.99</h1>
+                    </div>
+                </div>
+            </a>
+		</div>
+	</body>
+</html>
