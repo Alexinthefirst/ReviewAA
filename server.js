@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'static'))) // Allow express to use 
 var config = {
     user: 'raa',
     password: '!ReviewAA1',
-    server: 'LAPTOP-2EH1O1LB\\SQLEXPRESS19',
+    server: 'BANGDITO\\SQLEXPRESS',
     database: 'ReviewAA',
     trustServerCertificate: true
 };
@@ -65,6 +65,7 @@ app.get('/', (req, res) => {
 })
 
 // Route to receive reviews from every site in profile
+// Remember to fix this so not just anyone can use this route and waste my monthly allowance 
 app.get('/reviews', (req, res) => {
     if (true/* googleReviews = true*/ ){ // For google reviews, will edit later as this is our only one right now
         const params = { // Set up the parameters to use, these default ones should work the best
