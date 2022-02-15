@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1">
+		<title>ReviewAA - Home</title>
+        <!-- the form awesome library is used to add icons to our form -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+        <!-- include the stylesheet file -->
+        <link href="/style.css" rel="stylesheet" type="text/css">
+
+		<style>
+			html{
+				background-color: #c8d8e4;
+			}
+
+			ul {
+			list-style-type: none;
+			padding: 0;
+			overflow: hidden;
+			background-color: #2b6777;
+			}
+
+			li {
+			float: left;
+			}
+
+			li a {
+			display: block;
+			color: white;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+			}
+
+			/* Change the link color to #111 (black) on hover */
+			li a:hover {
+			background-color: #111;
+			}
+
+			.disabled {
+			pointer-events: none;
+			cursor: default;
+			font-size: large;
+			}
+
+			.contentleft {
+				background-color: #52ab98;
+				margin: auto;
+				padding: 50px;
+				float: left;
+				width: 753px;
+				height: 680px;
+			}
+			.contentright {
+				background-color: #f2f2f2;
+				margin: auto;
+				padding: 50px;
+				float: right;
+				width: 753px;
+				height: 680px;
+			}
+			.chart {border-style: solid;}
+			.register {
+				background-color: #52ab98;
+				color: white;
+				padding: 15px 25px;
+				text-decoration: none;
+				margin-left: 250px;
+			}
+		</style>
+
+	</head>
+	<body>
+		<div class="start">
+			<ul>
+				<li><a href="#" class="disabled"><b>ReviewAA</b></a></li>
+				<li style="float:right"><a class="active" href="/register">Register</a></li>
+				<li style="float:right"><a class="active" href="/login">Login</a></li>
+			</ul>
+
+			<div class="contentleft">
+				<img class="chart" src="img/example_chart.png" alt="Example Review Report" style="width: 653px; height: 580px"/>
+			</div>
+			<div class="contentright">
+					<h1 style="font-size: x-large">Welcome to ReviewAA</h1><br>
+
+				<p>&emsp;&emsp;ReviewAA allows businesses to examine their reviews on a per product basis. 
+					It will aggregate all reviews from across the web and provide them in an easy to read 
+					dashboard. This dashboard provides key areas of complaint that are seen in the reviews, 
+					as well as potentially fake reviews that are bringing down the score. Our company will then 
+					reach out to these reviewers to attempt to get them to change their review, or reach out to 
+					the platform to get them to remove fake reviews. </p><br>
+
+				<p>&emsp;&emsp;Our software has the strength to act against harmful reviews. Using publicly available systems, 
+					such as fake review reporting, and contacting reviewers, we can positively affect reviews of a product. 
+					Using algorithms to analyze reviews to get the key points out of them, we can relay this information 
+					to the user and help provide them with a clear path forward for their product. </p><br><br><br><br>
+
+				<a href="/register" class="register">Register Now</a>
+			</div>
+		</div>
+	</body>
+</html>

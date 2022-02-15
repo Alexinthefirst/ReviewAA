@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'static'))) // Allow express to use 
 var config = {
     user: 'raa',
     password: '!ReviewAA1',
-    server: 'BANGDITO\\SQLEXPRESS',
+    server: 'LAPTOP-2EH1O1LB\\SQLEXPRESS19',
     database: 'ReviewAA',
     trustServerCertificate: true
 };
@@ -80,6 +80,21 @@ app.get('/reviews', (req, res) => {
         })
         
     }
+})
+
+// Start page route
+app.get('/start', (req, res) => {
+    res.sendFile(path.join(__dirname + '/start.html'));
+})
+
+// Packages page route
+app.get('/packages', (req, res) => {
+    res.sendFile(path.join(__dirname + '/packages.html'));
+})
+
+// Payment page route
+app.get('/payment', (req, res) => {
+    res.sendFile(path.join(__dirname + '/payment.html'));
 })
 
 app.get('/dashboard', (req, res) => {
