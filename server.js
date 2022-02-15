@@ -57,11 +57,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // Base route
 app.get('/', (req, res) => {
-    if (req.session.loggedin){
-        res.send('Welcome back, ' + req.session.username + '!')
-    } else {
-        res.send('Please login to view this page.')
-    }
+        res.redirect('/start')
+    
 })
 
 // Route to receive reviews from every site in profile
@@ -100,7 +97,13 @@ app.get('/payment', (req, res) => {
 app.get('/dashboard', (req, res) => {
     if (req.session.loggedin){
         res.sendFile(path.join(__dirname + '/dashboard.html'));
+    } else {
+        res.send('Please login to view this page.')
     }
+})
+
+app.get('/underconstruction', (req, res) => {
+    res.sendFile(path.join(__dirname + '/underconstruction.html'))
 })
 
 // Login route, user facing
@@ -132,7 +135,7 @@ app.post('/users/register', jsonParser, async (req, res) => {
             
             await executeQuery(`INSERT INTO accounts (username, password, email) VALUES ('${req.body.username}', '${hashPassword}', 'test@test.ca')`) // Insert data in database
 
-            res.redirect("/login") // Send to the login screen
+            res.redirect(307, "/users/login") // Log the user in
         } else {
             res.send("User already exists.")
         }
@@ -161,7 +164,7 @@ app.post('/users/login', async (req, res) => {
             if (await bcrypt.compare(req.body.password, user.recordset[0].password)){
                 req.session.loggedin = true;
                 req.session.username = username;
-                res.redirect('/')
+                res.redirect('/dashboard')
             } else {
                 res.send("Cannot find user.")
             }
