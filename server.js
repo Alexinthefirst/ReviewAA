@@ -135,7 +135,11 @@ app.post('/users/register', jsonParser, async (req, res) => {
             
             await executeQuery(`INSERT INTO accounts (username, password, email) VALUES ('${req.body.username}', '${hashPassword}', 'test@test.ca')`) // Insert data in database
 
-            res.redirect(307, "/users/login") // Log the user in
+            req.session.loggedin = true;
+            req.session.username = req.body.username; // Log the user in via session instead of redirect to log in
+            // Later should change this to redirect, then hold database column that knows if the paid or not and redirect them based on that
+
+            res.redirect(/*307*/"/packages") // Log the user in
         } else {
             res.send("User already exists.")
         }
