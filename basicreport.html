@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1">
+		<title>ReviewAA - Report</title>
+        <!-- the form awesome library is used to add icons to our form -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+        <!-- include the stylesheet file -->
+        <link href="/style.css" rel="stylesheet" type="text/css">
+        <style>
+            html{
+                background-color: white;
+            }
+            .payment{
+                text-align: center;
+                background-color: white;
+            }
+        </style>
+	</head>
+	<body>
+
+		<div class="payment">
+			<h1>Payment method will go here</h1>
+            <a href="/dashboard">Proceed with payment</a>
+        </div>
+	</body>
+    <script>
+        // Self executing function
+        document.addEventListener("DOMContentLoaded", function(event) {
+            // Your code to run since DOM is loaded and ready
+            console.log("loaded");
+            const options = {
+                method: "GET",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" }
+            }
+            fetch('http://localhost:8000/reviews', options)
+                .then(function(response){
+                    return response.json();
+                }).then(function(data){
+                    console.log(data);
+            });
+           });
+    </script>
+</html>

@@ -67,7 +67,7 @@ app.get('/reviews', (req, res) => {
     if (true/* googleReviews = true*/ ){ // For google reviews, will edit later as this is our only one right now
         const params = { // Set up the parameters to use, these default ones should work the best
             engine: "google_maps_reviews",
-            data_id: "0x89c259a61c75684f:0x79d31adb123348d2",
+            data_id: "0x882b9ba7b6381219:0xc2ac30285bf0e016",
             sortBy: "qualityScore"
         }
         
@@ -98,7 +98,15 @@ app.get('/dashboard', (req, res) => {
     if (req.session.loggedin){
         res.sendFile(path.join(__dirname + '/dashboard.html'));
     } else {
-        res.send('Please login to view this page.')
+        res.redirect('/login')
+    }
+})
+
+app.get('/basicreport', (req, res) => {
+    if (req.session.loggedin){
+        res.sendFile(path.join(__dirname + '/basicreport.html'));
+    } else {
+        res.redirect('/login')
     }
 })
 
