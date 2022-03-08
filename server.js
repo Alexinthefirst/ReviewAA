@@ -8,6 +8,7 @@ const bcrypt = require("bcrypt") // Cryptography
 const bodyParser = require("body-parser"); // JSON parser
 const { response } = require("express");
 const SerpApi = require("google-search-results-nodejs")
+const chart = require('chart.js')
 
 var search = new SerpApi.GoogleSearch(process.env.REVIEW_API_KEY)
 
@@ -26,8 +27,9 @@ app.use(session({
 app.use(express.json()); // Allows express to use JSON requests
 app.use(express.urlencoded({ extended: true })); // Allows express to use HTML form POST
 app.use(express.static(path.join(__dirname, 'static'))) // Allow express to use files in the static folder
+app.use(express.static(__dirname + '/node_modules'));
 
-// SQL Connection -- Change this to your database details
+// SQL Connection -- Change details in .env
 var config = {
     user: 'raa',
     password: '!ReviewAA1',
@@ -67,8 +69,8 @@ app.get('/reviews', (req, res) => {
     if (true/* googleReviews = true*/ ){ // For google reviews, will edit later as this is our only one right now
         const params = { // Set up the parameters to use, these default ones should work the best
             engine: "google_maps_reviews",
+            hl: "en",
             data_id: "0x882b9ba7b6381219:0xc2ac30285bf0e016",
-            sortBy: "qualityScore"
         }
         
         // Do the search and receive 10 results
