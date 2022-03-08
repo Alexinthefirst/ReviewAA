@@ -94,6 +94,7 @@ app.get('/payment', (req, res) => {
     res.sendFile(path.join(__dirname + '/payment.html'));
 })
 
+// Dashboard page route
 app.get('/dashboard', (req, res) => {
     if (req.session.loggedin){
         res.sendFile(path.join(__dirname + '/dashboard.html'));
@@ -102,12 +103,18 @@ app.get('/dashboard', (req, res) => {
     }
 })
 
+// Basic report page route
 app.get('/basicreport', (req, res) => {
     if (req.session.loggedin){
         res.sendFile(path.join(__dirname + '/basicreport.html'));
     } else {
         res.redirect('/login')
     }
+})
+
+// Contacts page route
+app.get('/contacts', (req, res) => {
+        res.sendFile(path.join(__dirname + '/contacts.html'));
 })
 
 app.get('/underconstruction', (req, res) => {
