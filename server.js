@@ -81,6 +81,14 @@ app.get('/reviews', (req, res) => {
     }
 })
 
+app.get('/reviewsDates', async (req, res) => {
+    //console.log('OKAY???? ' + req.session.userid) ignore this please :)
+    var reviews = await executeQuery(`SELECT * FROM ratingsDates WHERE userid = ${req.session.userid}`);
+
+    res.json(reviews);
+
+})
+
 // Start page route
 app.get('/start', (req, res) => {
     res.sendFile(path.join(__dirname + '/start.html'));
@@ -117,6 +125,14 @@ app.get('/basicreport', (req, res) => {
 // Contacts page route
 app.get('/contacts', (req, res) => {
         res.sendFile(path.join(__dirname + '/contacts.html'));
+})
+
+app.get('/urlLanding', (req, res) => {
+    res.sendFile(path.join(__dirname + '/url.html'))
+})
+
+app.get('/profile', (req, res) => {
+    res.sendFile(path.join(__dirname + '/profileEditing.html'))
 })
 
 app.get('/underconstruction', (req, res) => {
@@ -181,10 +197,12 @@ app.post('/users/login', async (req, res) => {
 
         var user = await executeQuery(`Select * FROM accounts WHERE username = '${username}'`) // Get the user that has that username, will compare passwords in next step
         try {
+            console.log(user.recordset[0].userid)
             // Compares two passwords
             if (await bcrypt.compare(req.body.password, user.recordset[0].password)){
                 req.session.loggedin = true;
                 req.session.username = username;
+                req.session.userid = user.recordset[0].userid;
                 res.redirect('/dashboard')
             } else {
                 res.send("Cannot find user.")

@@ -11,13 +11,71 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src='/scripts/basicReport.js'></script>
         
-        <style>
-            html{
-                background-color: white;
-            }
+		<style>
+			html{
+				background-color: #c8d8e4;
+			}
+
+			img {
+				width: 100%;
+			}
+
+			ul {
+			list-style-type: none;
+			padding: 0;
+			overflow: hidden;
+			background-color: #2b6777;
+			}
+
+			li {
+			float: left;
+			}
+
+			li a {
+			display: block;
+			color: white;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+			}
+
+			/* Change the link color to #111 (black) on hover */
+			li a:hover {
+			background-color: #111;
+			}
+
+			.disabled {
+			pointer-events: none;
+			cursor: default;
+			font-size: large;
+			}
+
+			.contentleft {
+				background-color: #f2f2f2;
+				padding: 55px;
+                padding-top: 20px;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                margin-top: 2.5%;
+                height: 90%;
+                text-align: center;
+			}
+			.button {
+				background-color: #52ab98;
+				color: white;
+				padding: 10px 35px;
+				text-decoration: none;
+			}
+            .button:hover{
+				background-color: #327969;
+			}
+
             .top{
                 text-align: center;
-                background-color: white;
+                background-color: #f2f2f2;
             }
             .charts {
                 margin: auto;
@@ -27,6 +85,7 @@
             }
             .chart{
                 margin-left: 5px;
+                margin-bottom: 10px;
                 width: 30%;
                 height: 30%;
             }
@@ -36,25 +95,37 @@
             h3{
                 text-align: center;
             }
+            .start {
+                background-color: #f2f2f2;
+                margin-top: 20px;
+                padding-bottom: 1px;
+            }
         </style>
 	</head>
 	<body>
-
-		<div class="top">
-			<h1>Basic Report for BLANK</h1>
-        </div>
-        <div class="charts">
-            <div class="chart">
-                <h3>Fake Ratings</h3>
-                <canvas id="myChartPie"></canvas>
+			<ul>
+				<li><a class="active" href="/dashboard">&lt; Back</a></li>
+			</ul>
+            <div class="start">
+            <div class="top">
+                <h1>Basic Report</h1>
             </div>
-            <div class="chart">
-                <h3>Ratings</h3>
-                <canvas id="myChartBar"></canvas>
+            <div class="charts">
+                <div class="chart">
+                    <h3>Fake Ratings</h3>
+                    <canvas id="myChartPie"></canvas>
+                </div>
+                <div class="chart">
+                    <h3>Ratings</h3>
+                    <canvas id="myChartBar"></canvas>
+                </div>
+                <div class="chart">
+                    <h3>Change in ratings</h3>
+                    <canvas id="myChartLine"></canvas>
+                </div>
             </div>
-            <div class="chart">
-                <h3>Change in ratings</h3>
-                <canvas id="myChartLine"></canvas>
+            <div class="disclaimer">
+                <h3>All ratings data is aggregated from Google reviews</h3>
             </div>
         </div>
 	</body>

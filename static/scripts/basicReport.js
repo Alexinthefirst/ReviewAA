@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", function(event) {
      // Your code to run since DOM is loaded and ready
      getData()
+     getDateData()
 });
 
 function getData(){
     var ratings = [0, 0, 0, 0, 0];
+    var dates
     console.log("loaded");
             const options = {
                 method: "GET",
@@ -41,14 +43,59 @@ function getData(){
 
                     return ratings;
                 }).then(function(data){
-                    buildCharts(data)
+                    buildCharts(ratings)
                 })
+                
+}
+
+function getDateData(){
+    const options = {
+        method: "GET",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" }
+    }
+    fetch('http://localhost:8000/reviewsDates', options)
+        .then(function(response){
+            return response.json();
+        }).then(function(data){
+            buildDateChart(data)
+        })
+}
+
+function buildDateChart(data){
+    var date = new Date()
+
+    const ctxLine = document.getElementById('myChartLine').getContext('2d');
+    const myChartLine = new Chart(ctxLine, {
+        type: 'line',
+        data: {
+            labels: ['November ' + date.getDate(), 'December ' + date.getDate(), 'January ' + date.getDate(), 'February ' + date.getDate(), 'March ' + date.getDate()],
+            datasets: [{
+                label: 'Change',
+                data: /*data*/[data.recordset[0].rating, data.recordset[1].rating, data.recordset[2].rating, data.recordset[3].rating, data.recordset[4].rating],
+                fill: true,
+                backgroundColor: [
+                    'rgba(102, 255, 102, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(102, 255, 102, 1)',
+                ],
+                tension: 0
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
 
 function buildCharts(data){
     const ctxPie = document.getElementById('myChartPie').getContext('2d');
     const ctxBar = document.getElementById('myChartBar').getContext('2d');
-    const ctxLine = document.getElementById('myChartLine').getContext('2d');
     const myChartPie = new Chart(ctxPie, {
         type: 'pie',
         data: {
@@ -110,29 +157,5 @@ function buildCharts(data){
         }
     });
 
-    const myChartLine = new Chart(ctxLine, {
-        type: 'line',
-        data: {
-            labels: ['November', 'December', 'January', 'February', 'March'],
-            datasets: [{
-                label: 'Change',
-                data: /*data*/['3.6', '4', '4.4', '4.1', '4.3'],
-                fill: true,
-                backgroundColor: [
-                    'rgba(102, 255, 102, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(102, 255, 102, 1)',
-                ],
-                tension: 0
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
+    
 }
