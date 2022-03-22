@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
      // Your code to run since DOM is loaded and ready
      getData()
      getDateData()
+     getLastRating()
 });
 
 function getData(){
@@ -59,6 +60,27 @@ function getDateData(){
             return response.json();
         }).then(function(data){
             buildDateChart(data)
+        })
+}
+
+function getLastRating(){
+    var ratingChange = 0.0;
+    const options = {
+        method: "GET",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" }
+    }
+    fetch('http://localhost:8000/loginsLast', options)
+        .then(function(response){
+            return response.json();
+        }).then(function(data){
+            ratingChange = data.recordset[data.recordset.length - 1].ratingAtLogin - data.recordset[data.recordset.length - 2].ratingAtLogin
+            if (ratingChange > 0){
+                document.getElementById("last").style.color = 'green'
+            } else if (ratingChange < 0){
+                document.getElementById("last").style.color = 'red'
+            }
+            document.getElementById("last").innerText = 'Change since last login = ' + ratingChange.toFixed(2)
         })
 }
 

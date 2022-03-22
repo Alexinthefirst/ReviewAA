@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,minimum-scale=1">
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
 		<title>Login</title>
         <!-- the form awesome library is used to add icons to our form -->
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
@@ -15,20 +16,29 @@
 				<li><a class="active" href="/dashboard">&lt; Back</a></li>
 			</ul>
 			<div class="contentleft">
+                <h1>Update URL</h1>
+                <form action="/users/login" method="post">
+                    <br>
+                    <label for="url">
+                        <p>URL for reports</p>
+                    </label>
+                    <br>
+                    <input type="text" name="url" placeholder="url" id="url" required>
+                    <br>
+                    <br>
+                    <input class="button" type="submit" value="Save">
+                </form>
+            </div>
+            <div class="contentright">
+                <h1 style="font-size: x-large">URL Instructions</h1><br>
 
-			<h1>Update URL</h1>
-			<form action="/users/login" method="post">
-                <br>
-				<label for="url">
-					<p>URL for reports</p>
-				</label>
-                <br>
-				<input type="text" name="url" placeholder="url" id="url" required>
-                <br>
-                <br>
-				<input class="button" type="submit" value="Save">
-			</form>
+            <p>One can provide the Google CID for their business, which is obtainable from their Google My Business Dashboard</p><br>
+            <p>One can provide the name of their business and we will find the CID for your business.</p><br>
+            <p>*The Google CID is a unique number assigned to your business that allows us to find all the info we need to provide you the service.
+            </p><br><br><br><br>
+        </div>
 		</div>
+        <aside></aside>
 
         <style>
             html{
@@ -75,9 +85,17 @@
                 padding: 55px;
                 padding-top: 25px;
                 float: left;
-                width: 100%;
-                height: 100%;
+                width: 50%;
+                height: 680px;
             }
+			.contentright {
+				background-color: #f2f2f2;
+				margin: auto;
+				padding: 50px;
+				float: right;
+				width: 50%;
+				height: 680px;
+			}
             .chart {border-style: solid;}
             .button {
                 background-color: #52ab98;

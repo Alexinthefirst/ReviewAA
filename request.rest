@@ -2,7 +2,7 @@ GET http://localhost:8000/users
 
 ###
 
-GET http://localhost:8000/reviews/google.ca
+GET http://localhost:8000/reviews
 
 ###
 

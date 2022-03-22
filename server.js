@@ -63,6 +63,7 @@ app.get('/', (req, res) => {
     
 })
 
+// CONVERT THIS OVER TO GOOGLE SEARCH API FOR GENERAL REVIEWS, STILL USE GOOGLE MAPS REVIEWS FOR TOPICS FOR ADVANCED REPORTING
 // Route to receive reviews from every site in profile
 // Remember to fix this so not just anyone can use this route and waste my monthly allowance 
 app.get('/reviews', (req, res) => {
@@ -82,11 +83,17 @@ app.get('/reviews', (req, res) => {
 })
 
 app.get('/reviewsDates', async (req, res) => {
-    //console.log('OKAY???? ' + req.session.userid) ignore this please :)
     var reviews = await executeQuery(`SELECT * FROM ratingsDates WHERE userid = ${req.session.userid}`);
 
     res.json(reviews);
 
+})
+
+// Return the last login for every user
+app.get('/loginsLast', async (req, res) => {
+    var logins = await executeQuery(`SELECT userid, ratingAtLogin, loginDate FROM logins WHERE userid = ${req.session.userid}`)
+
+    res.json(logins)
 })
 
 // Start page route
@@ -96,18 +103,37 @@ app.get('/start', (req, res) => {
 
 // Packages page route
 app.get('/packages', (req, res) => {
-    res.sendFile(path.join(__dirname + '/packages.html'));
+    if (req.session.loggedin){
+        res.sendFile(path.join(__dirname + '/packages.html'));
+    } else {
+        res.redirect('/login')
+    }
 })
 
 // Payment page route
-app.get('/payment', (req, res) => {
+app.get('/payment/:package', async (req, res) => {
+    // Move where this happens after payment processing is implemented
+    let ts = Date.now();
+
+    let date_ob = new Date(ts);
+    let date = date_ob.getDate();
+    let month = date_ob.getMonth() + 1;
+    let year = date_ob.getFullYear();
+    var datefinal = year + "-" + month + "-" + date;
+
+    //Saves plan selection to database for later use
+    await executeQuery(`INSERT INTO userPlans VALUES (${req.session.userid}, ${req.params["package"]}, '${datefinal}')`)
     res.sendFile(path.join(__dirname + '/payment.html'));
 })
 
 // Dashboard page route
 app.get('/dashboard', (req, res) => {
     if (req.session.loggedin){
-        res.sendFile(path.join(__dirname + '/dashboard.html'));
+        if (req.session.firstTimeLogin){
+            res.redirect('/basicreport')
+        } else {
+            res.sendFile(path.join(__dirname + '/dashboard.html'));
+        }
     } else {
         res.redirect('/login')
     }
@@ -116,7 +142,12 @@ app.get('/dashboard', (req, res) => {
 // Basic report page route
 app.get('/basicreport', (req, res) => {
     if (req.session.loggedin){
-        res.sendFile(path.join(__dirname + '/basicreport.html'));
+        if (req.session.firstTimeLogin){
+            req.session.firstTimeLogin = false;
+            res.sendFile(path.join(__dirname + '/basicreport.html'));
+        } else {
+            res.sendFile(path.join(__dirname + '/basicreport.html'));
+        }
     } else {
         res.redirect('/login')
     }
@@ -166,11 +197,14 @@ app.post('/users/register', jsonParser, async (req, res) => {
         {
             const hashPassword = await bcrypt.hash(req.body.password, 10) // Hashes and salts the password
             
-            await executeQuery(`INSERT INTO accounts (username, password, email) VALUES ('${req.body.username}', '${hashPassword}', 'test@test.ca')`) // Insert data in database
-
+            var completeUser = await executeQuery(`INSERT INTO accounts (username, password, email) VALUES ('${req.body.username}', '${hashPassword}', '${req.body.email}'); SELECT SCOPE_IDENTITY() AS userid`)
             req.session.loggedin = true;
             req.session.username = req.body.username; // Log the user in via session instead of redirect to log in
+            // Insert data in database
+            
             // Later should change this to redirect, then hold database column that knows if the paid or not and redirect them based on that
+            req.session.firstTimeLogin = true;
+            req.session.userid = completeUser.recordset[0].userid;
 
             res.redirect(/*307*/"/packages") // Log the user in
         } else {
@@ -191,7 +225,8 @@ app.post('/users/login', async (req, res) => {
     // Get the input
     let username = req.body.username;
     let password = req.body.password;
-
+    var dateString = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    console.log(dateString)
     // Ensure the fields aren't empty
     if (username && password){
 
@@ -203,6 +238,9 @@ app.post('/users/login', async (req, res) => {
                 req.session.loggedin = true;
                 req.session.username = username;
                 req.session.userid = user.recordset[0].userid;
+
+                // Insert the login time to database
+                await executeQuery(`INSERT INTO logins VALUES (${user.recordset[0].userid}, 4.2, '${dateString}')`)
                 res.redirect('/dashboard')
             } else {
                 res.send("Cannot find user.")
