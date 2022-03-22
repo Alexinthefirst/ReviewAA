@@ -206,7 +206,7 @@ app.post('/users/register', jsonParser, async (req, res) => {
             req.session.firstTimeLogin = true;
             req.session.userid = completeUser.recordset[0].userid;
 
-            res.redirect(/*307*/"/packages") // Log the user in
+            res.redirect(/*307*/"/dashboard") // Log the user in
         } else {
             res.send("User already exists.")
         }
