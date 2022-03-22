@@ -10,97 +10,151 @@
         <link href="/style.css" rel="stylesheet" type="text/css">
 
         <style>
-            /* Split the screen in half */
-            .split {
-            height: 100%;
-            width: 50%;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            overflow-x: hidden;
-            padding-top: 20px;
+			html{
+				background-color: #c8d8e4;
+			}
+
+			.nav ul {
+			list-style-type: none;
+			padding: 0;
+			overflow: hidden;
+			background-color: #2b6777;
+			}
+
+			.nav li {
+			float: left;
+			}
+
+			.nav li a {
+			display: block;
+			color: white;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+			}
+
+			/* Change the link color to #111 (black) on hover */
+			li a:hover {
+			background-color: #111;
+			}
+
+			.disabled {
+			pointer-events: none;
+			cursor: default;
+			font-size: large;
+			}
+
+			.content {
+				background-color: #f2f2f2;
+				padding: 55px;
+                padding-top: 8px;
+                position: fixed;
+                height: 88%;
+                width: 99%;
+			}
+			.button {
+				background-color: #52ab98;
+				color: white;
+				padding: 10px 35px;
+				text-decoration: none;
+			}
+            .button:hover{
+				background-color: #327969;
+			}
+
+            .trial {
+                background-color: #abbedb;
+                border: 2px solid black;
+                color:white;
+                display: block;
+                text-decoration: none;
+                padding-left: 25px;
             }
 
-            /* Control the left side */
-            .left {
-            left: 0;
-            background-color: #c8d8e4;
+            .basic {
+                background-color: #52ab98;
+                border: 2px solid black;
+                color: white;
+                display: block;
+                text-decoration: none;
+                padding-left: 25px;
             }
 
-            /* Control the right side */
-            .right {
-            right: 0;
-            background-color: #52ab98;
+            .advanced{
+                background-color: #2b6777;
+                border: 2px solid black;
+                color: white;
+                display: block;
+                text-decoration: none;
+                padding-left: 25px;
             }
 
-            .left div:hover{
-                border-style: solid;
+            .trial, .basic, .advanced{
+                border: 2px solid black;
+                box-sizing:border-box;
             }
 
-            .right div:hover{
-                border-style: solid;
+            .trial:hover, .basic:hover, .advanced:hover{
+                border: 3px solid black;
+                box-sizing:border-box;
             }
+            
+		</style>
 
-            /* If you want the content centered horizontally and vertically */
-            .centered {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background-color: white;
-                width: 400px;
-                height: 400px;
-                padding: 20px;
-            }
-
-            .centered h1 {
-                text-align: center;
-                margin-bottom: 50px;
-                font-size: 200%;
-            }
-            .centered li{
-                margin-bottom: 10px;
-            }
-            .colour{
-                color: black;
-            }
-        </style>
 	</head>
 	<body>
+        <div class="nav">
+			<ul>
+				<li><a class="active" href="/start">&lt; Back</a></li>
+			</ul>
+        </div>
 
-		<div class="packages">
-			<h1>Packages</h1>
-            <a href="/payment" class="colour">
-                <div class="split left">
-                    <div class="centered">
-                    <h1>Basic Reporting</h1>
-                    <ul>
-                        <li>Base level reporting</li>
-                        <li>Many types of reports for your product's reviews</li>
-                        <li>See reviews on your competitor's products</li>
-                        <li>Easy to use dashboard for all your features</li>
-                    </ul><br>
+			<div class="content">
 
-                    <h1>$4.99</h1>
-                    </div>
-                </div>
-            </a>
+                <h1 style="font-size: large;">ReviewAA Packages:</h1>
+
+                <div>
+                    <a href="/payment" class="trial">
+                        <h1 style="font-size: large;">Free Trial</h1>
+                        <ul>
+                            <li>Limited access to *all* ReviewAA features!</li>
+                            <li>Try it out and see if ReviewAA works for you!</li>
+                            <li>Free Trial expires in 7 days</li>
+                        </ul>
+
+                        <h1>Free</h1>
+                    </a>
+                </div><br>
+
+
+                <div>
+                    <a href="/payment" class="basic">
+                        <h1 style="font-size: large;">Basic Reporting</h1>
+                        <ul>
+                            <li>Base level reporting</li>
+                            <li>Many types of reports for your product's reviews</li>
+                            <li>See reviews on your competitor's products</li>
+                            <li>Easy to use dashboard for all your features</li>
+                        </ul>
+
+                        <h1>$4.99</h1>
+                    </a>
+                </div><br>
             
-            <a href="/payment" class="colour">
-                <div class="split right">
-                    <div class="centered">
-                    <h1>Advanced Reporting</h1>
+
+                <div>
+                <a href="/payment" class="advanced">
+                    <h1 style="font-size: large;">Advanced Reporting</h1>
                     <ul>
                         <li>Advanced reporting systems</li>
                         <li>View reports with fake review detection</li>
                         <li>Counter against bot reviews left on your product</li>
-                        <li>Easy to use dashboard for all your features</li>
-                    </ul><br>
+                        <li>Includes all features from the Basic package</li>
+                    </ul>
 
                     <h1>$9.99</h1>
-                    </div>
+                </a>
                 </div>
-            </a>
-		</div>
+			</div>
 	</body>
 </html>

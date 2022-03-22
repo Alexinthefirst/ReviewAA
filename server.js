@@ -172,7 +172,7 @@ app.post('/users/register', jsonParser, async (req, res) => {
             req.session.username = req.body.username; // Log the user in via session instead of redirect to log in
             // Later should change this to redirect, then hold database column that knows if the paid or not and redirect them based on that
 
-            res.redirect(/*307*/"/packages") // Log the user in
+            res.redirect(/*307*/"/dashboard") // Log the user in
         } else {
             res.send("User already exists.")
         }
