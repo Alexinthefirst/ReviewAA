@@ -187,6 +187,13 @@ app.get('/users', async (req, res) => {
     res.send("Access Denied.");
 })
 
+app.get('/users/logout', async (req, res) => {
+    req.session.loggedin = false;
+    req.session.username = null;
+    req.session.userid = null;
+    res.redirect('/start')
+});
+
 // Used to register a new user
 app.post('/users/register', jsonParser, async (req, res) => {
     try {
@@ -206,7 +213,7 @@ app.post('/users/register', jsonParser, async (req, res) => {
             req.session.firstTimeLogin = true;
             req.session.userid = completeUser.recordset[0].userid;
 
-            res.redirect(/*307*/"/dashboard") // Log the user in
+            res.redirect(/*307*/"/packages") // Log the user in
         } else {
             res.send("User already exists.")
         }
