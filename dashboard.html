@@ -16,8 +16,8 @@
 	</head>
 	<body>
         <div class="banner">
-            <a class="active" style="text-align: left; float: left; padding-top: 28px; padding-left: 20px; text-decoration: none; font-weight: bold;" href="/start">&lt; Back</a>
-            <h1 id="title">Welcome to your ReviewAA Dashboard</h1>
+            <a class="active" id="back" href="/start">&#9665; Back</a>
+            <h1 id="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
         </div>
 
         <a href="/urlLanding">
@@ -25,9 +25,9 @@
                 <div class="content">
                      <div class="table">
                          <div class="table-cell">
-                             <img class="rs" src="img/url.png"/>
-                             Update URLs
-                             <p style="font-size: small; text-align: center; text-decoration: underline;">Click here to get started!</p>
+                             <img class="rs" src="img/url_icon.png"/>
+                             <p>Update URLs</p>
+                             <p style="font-size: small; text-decoration: underline;">Click <span style="color: #f47b5a"> here</span> to get started!</p>
                          </div>
                      </div>
                  </div>
@@ -39,8 +39,8 @@
                 <div class="content">
                      <div class="table">
                          <div class="table-cell">
-                             <img class="rs" src="img/reports.png"/>
-                             Basic Report
+                             <img class="rs" src="img/basic_report_icon.png"/>
+                             <p>Basic Report</p>
                          </div>
                      </div>
                  </div>
@@ -51,33 +51,20 @@
                 <div class="content">
                      <div class="table">
                          <div class="table-cell">
-                             <img class="rs" src="img/reports.png"/>
-                             Advanced Report
+                             <img class="rs" src="img/advanced_report_icon.png"/>
+                             <p>Advanced Report</p>
                          </div>
                      </div>
                  </div>
              </div>
         </a>
-
-        <!-- <a href="/underconstruction">
-            <div class="square">
-                <div class="content">
-                     <div class="table">
-                         <div class="table-cell">
-                             <img class="rs" src="img/mail.png"/>
-                             Inbox
-                         </div>
-                     </div>
-                 </div>
-             </div>
-        </a> -->
         <a href="/underconstruction">
             <div class="square">
                 <div class="content">
                      <div class="table">
                          <div class="table-cell">
-                             <img class="rs" src="img/peer.png"/>
-                             Peer Reporting
+                             <img class="rs" src="img/comp_reporting_icon.png"/>
+                             <p>Competitor Reporting</p>
                          </div>
                      </div>
                  </div>
@@ -88,8 +75,8 @@
                 <div class="content">
                      <div class="table">
                          <div class="table-cell">
-                             <img class="rs" src="img/profileIcon.jpg"/>
-                             Profile
+                             <img class="rs" src="img/profile_icon.png"/>
+                             <p>Profile</p>
                          </div>
                      </div>
                  </div>
@@ -100,8 +87,8 @@
                 <div class="content">
                      <div class="table">
                          <div class="table-cell">
-                            <img class="rs" src="img/mail.png"/>
-                             Contact Us
+                            <img class="rs" src="img/contact_icon.png"/>
+                             <p>Contact Us</p>
                          </div>
                      </div>
                  </div>
@@ -112,8 +99,8 @@
                 <div class="content">
                      <div class="table">
                          <div class="table-cell">
-                            <img class="rs" src="img/logout.png"/>
-                             Logout
+                            <img class="rs" src="img/logout_icon.png"/>
+                             <p>Logout</p>
                          </div>
                      </div>
                  </div>
@@ -132,6 +119,11 @@
                 background-color:#1E1E1E;
                 overflow:hidden;
             }
+
+            /* not sure why this breaks everything */
+            /* .square:hover{
+                border:solid 1px white;
+            } */
             
             .content {
                 position:absolute;
@@ -165,7 +157,6 @@
                 padding:0;
             }
 
-
             /*  For responsive images */
 
             .content .rs{
@@ -185,7 +176,9 @@
             p{
                 margin:0;
                 padding:0;
-                text-align:left;
+                text-align:center;
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                font-size: 18px;
             }
 
             a{
@@ -198,12 +191,32 @@
                 padding-bottom:10px;
                 width: 100%;
                 height: 10%;
-                background-color: #1E1E1E;
-                color:#FFFFFF"
+                background-color: #65ac84;
+                color: white;
             }
 
             h1{
                 font-size: xx-large;
+            }
+            #back{
+                text-align: left; 
+                float: left; 
+                margin-top: 18px; 
+                margin-left: 20px; 
+                text-decoration: none; 
+                font-weight: bold;
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                color:white;
+                padding: 10px;
+            }
+            #back:hover{
+                background-color: #35694c;
+            }
+            html{
+                background-color: #414142;
+            }
+            #title{
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
             }
         </style>
 	</body>

@@ -130,3 +130,10 @@ body {
   .dropdown:hover .dropdown-content {
     display: block;
   }
+  #button_orange{
+    background-color: #f47b5a;
+    color: white;
+  }
+  #button_orange:hover{
+    background-color:  #b85d44;
+  }

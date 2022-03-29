@@ -20,7 +20,7 @@
 			list-style-type: none;
 			padding: 0;
 			overflow: hidden;
-			background-color: #2b6777;
+			background-color: #65ac84;
 			}
 
 			.nav li {
@@ -37,7 +37,7 @@
 
 			/* Change the link color to #111 (black) on hover */
 			li a:hover {
-			background-color: #111;
+			background-color: #35694c;
 			}
 
 			.disabled {
@@ -51,7 +51,7 @@
 				padding: 55px;
                 padding-top: 8px;
                 position: fixed;
-                height: 88%;
+                height: 89%;
                 width: 99%;
 			}
 			.button {
@@ -96,10 +96,17 @@
                 box-sizing:border-box;
             }
 
+            .trial li, .basic li, .advanced li{
+                font-size: 14px;
+            }
+
             .trial:hover, .basic:hover, .advanced:hover{
                 border: 3px solid black;
                 box-sizing:border-box;
             }
+            /* .buyNow{
+                float: left;
+            } */
             
 		</style>
 
@@ -107,7 +114,7 @@
 	<body>
         <div class="nav">
 			<ul>
-				<li><a class="active" href="/start">&lt; Back</a></li>
+				<li><a class="active" href="/start">&#9665; Back</a></li>
 			</ul>
         </div>
 
@@ -117,14 +124,20 @@
 
                 <div>
                     <a href="/payment/3" class="trial">
-                        <h1 style="font-size: large;">Free Trial</h1>
+                        <h1 style="font-size: 15px;">Free Trial</h1>
                         <ul>
                             <li>Limited access to *all* ReviewAA features!</li>
                             <li>Try it out and see if ReviewAA works for you!</li>
                             <li>Free Trial expires in 7 days</li>
                         </ul>
 
-                        <h1>Free</h1>
+                        <h1>Free - 7 day trial</h1>
+                        <form class="buyNow" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                            <input type="hidden" name="cmd" value="_s-xclick">
+                            <input type="hidden" name="hosted_button_id" value="T59AVPYNKRLTU">
+                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                        </form>
                     </a>
                 </div><br>
 
@@ -139,7 +152,13 @@
                             <li>Easy to use dashboard for all your features</li>
                         </ul>
 
-                        <h1>$4.99</h1>
+                        <h1>$4.99/month</h1>
+                        <form class="buyNow" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                            <input type="hidden" name="cmd" value="_s-xclick">
+                            <input type="hidden" name="hosted_button_id" value="T59AVPYNKRLTU">
+                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                        </form>
                     </a>
                 </div><br>
             
@@ -154,7 +173,13 @@
                         <li>Includes all features from the Basic package</li>
                     </ul>
 
-                    <h1>$9.99</h1>
+                    <h1>$9.99/month</h1>
+                    <form class="buyNow" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="T59AVPYNKRLTU">
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                    </form>
                 </a>
                 </div>
 			</div>
