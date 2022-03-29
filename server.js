@@ -129,7 +129,12 @@ app.get('/loginsLast', async (req, res) => {
 
 // Start page route
 app.get('/start', (req, res) => {
-    res.sendFile(path.join(__dirname + '/start.html'));
+    if (req.session.loggedin) {
+        res.sendFile(path.join(__dirname + '/startLoggedIn.html'));
+    } else {
+        res.sendFile(path.join(__dirname + '/start.html'));
+    }
+    
 })
 
 // Packages page route
@@ -180,6 +185,15 @@ app.get('/basicreport', (req, res) => {
         } else {
             res.sendFile(path.join(__dirname + '/basicreport.html'));
         }
+    } else {
+        res.redirect('/login')
+    }
+})
+
+app.get('/advancedreport', (req, res) => {
+    if (req.session.loggedin){
+
+            res.sendFile(path.join(__dirname + '/advancedreport.html'));
     } else {
         res.redirect('/login')
     }

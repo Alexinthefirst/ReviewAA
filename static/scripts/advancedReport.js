@@ -22,9 +22,26 @@ function dataSetup(){
     }).then(function(data){
         getData(data)
         
-        document.getElementById('businessName').innerText = 'Basic Report for ' + data['place_info'].title
+        // Set all the base text using info from db
+        document.getElementById('businessName').innerText = 'Advanced Report for ' + data['place_info'].title
         document.getElementById('totalRating').innerText = data['place_info'].rating + " Stars"
         document.getElementById('reviewCount').innerText = "Based on " + data['place_info'].reviews + " reviews"
+
+        // Set up the table with topics with info from db
+        var table = document.getElementById('topicTable');
+
+        var i = 1
+        console.log(data['topics'])
+        for (const topic of data['topics']){
+            
+            var row = table.insertRow(i)
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerText = topic.keyword
+            cell2.innerText = topic.mentions
+            i++;
+        }
+        
 
 
     })
