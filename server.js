@@ -8,7 +8,8 @@ const bcrypt = require("bcrypt") // Cryptography
 const bodyParser = require("body-parser"); // JSON parser
 const { response } = require("express");
 const SerpApi = require("google-search-results-nodejs")
-const chart = require('chart.js')
+const chart = require('chart.js');
+
 
 var search = new SerpApi.GoogleSearch(process.env.REVIEW_API_KEY)
 
@@ -66,12 +67,16 @@ app.get('/', (req, res) => {
 // CONVERT THIS OVER TO GOOGLE SEARCH API FOR GENERAL REVIEWS, STILL USE GOOGLE MAPS REVIEWS FOR TOPICS FOR ADVANCED REPORTING
 // Route to receive reviews from every site in profile
 // Remember to fix this so not just anyone can use this route and waste my monthly allowance 
-app.get('/reviews', (req, res) => {
+app.get('/reviews', async (req, res) => {
     if (true/* googleReviews = true*/ ){ // For google reviews, will edit later as this is our only one right now
+        var dataid = await executeQuery(`SELECT dataid FROM accounts WHERE userid = ${req.session.userid}`)
+        
+        console.log(dataid)
+
         const params = { // Set up the parameters to use, these default ones should work the best
             engine: "google_maps_reviews",
             hl: "en",
-            data_id: "0x882b9ba7b6381219:0xc2ac30285bf0e016",
+            data_id: dataid.recordset[0].dataid,
         }
         
         // Do the search and receive 10 results
@@ -82,6 +87,26 @@ app.get('/reviews', (req, res) => {
     }
 })
 
+// Used to get the DataID for use in getting reviews
+app.post('/dataid', (req, res) => {
+    const params = {
+        engine: "google_maps",
+        type: "search",
+        google_domain: "google.com",
+        q: `${req.body.url}`,
+        hl: "en",
+    };
+
+    search.json(params, function(data) {
+        console.log(data['place_results']);
+        var place = data['place_results'];
+        console.log(place.data_id)
+        executeQuery(`UPDATE accounts SET dataid = '${place.data_id}' WHERE userid = ${req.session.userid}`)
+    })
+    res.redirect('/dashboard')
+})
+
+// Get objects for use in time graph
 app.get('/reviewsDates', async (req, res) => {
     var reviews = await executeQuery(`SELECT * FROM ratingsDates WHERE userid = ${req.session.userid}`);
 
