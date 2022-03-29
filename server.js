@@ -103,27 +103,28 @@ app.get('/start', (req, res) => {
 
 // Packages page route
 app.get('/packages', (req, res) => {
-    if (req.session.loggedin){
         res.sendFile(path.join(__dirname + '/packages.html'));
-    } else {
-        res.redirect('/login')
-    }
+
 })
 
 // Payment page route
 app.get('/payment/:package', async (req, res) => {
-    // Move where this happens after payment processing is implemented
-    let ts = Date.now();
+    if (req.session.loggedin){
+        // Move where this happens after payment processing is implemented
+        let ts = Date.now();
 
-    let date_ob = new Date(ts);
-    let date = date_ob.getDate();
-    let month = date_ob.getMonth() + 1;
-    let year = date_ob.getFullYear();
-    var datefinal = year + "-" + month + "-" + date;
+        let date_ob = new Date(ts);
+        let date = date_ob.getDate();
+        let month = date_ob.getMonth() + 1;
+        let year = date_ob.getFullYear();
+        var datefinal = year + "-" + month + "-" + date;
 
-    //Saves plan selection to database for later use
-    await executeQuery(`INSERT INTO userPlans VALUES (${req.session.userid}, ${req.params["package"]}, '${datefinal}')`)
-    res.sendFile(path.join(__dirname + '/payment.html'));
+        //Saves plan selection to database for later use
+        await executeQuery(`INSERT INTO userPlans VALUES (${req.session.userid}, ${req.params["package"]}, '${datefinal}')`)
+        res.sendFile(path.join(__dirname + '/payment.html'));
+    } else {
+        res.redirect('/login')
+    }
 })
 
 // Dashboard page route
