@@ -1,12 +1,38 @@
 document.addEventListener("DOMContentLoaded", function(event) {
      // Your code to run since DOM is loaded and ready
-     getData()
+     dataSetup()
+
+     
      getDateData()
      getLastRating()
+
+
 });
 
-function getData(){
+// Setup for data variable used for other functions
+function dataSetup(){
+    const options = {
+        method: "GET",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" }
+    }
+    fetch('http://localhost:8000/reviews', options)
+    .then(function(response){
+        return response.json();
+    }).then(function(data){
+        getData(data)
+        
+        document.getElementById('businessName').innerText = 'Basic Report for ' + data['place_info'].title
+        document.getElementById('totalRating').innerText = data['place_info'].rating + " Stars"
+        document.getElementById('reviewCount').innerText = "Based on " + data['place_info'].reviews + " reviews"
+
+
+    })
+}
+
+function getData(data){
     var ratings = [0, 0, 0, 0, 0];
+    var ratingsPercent = [0, 0, 0, 0, 0];
     var dates
     console.log("loaded");
             const options = {
@@ -15,37 +41,36 @@ function getData(){
                 headers: { "Content-Type": "application/json" }
             }
             // Get the data
-            fetch('http://localhost:8000/reviews', options)
-                .then(function(response){
-                    return response.json();
-                }).then(function(data){
-                    // Get the reviews from the data
-                    console.log(data)
-                    // Get every review and sort it
-                    for (const review of data){
-                        switch (review.rating) {
-                            case 5:
-                                ratings[0] += 1
-                                break;
-                            case 4:
-                                ratings[1] += 1
-                                break;
-                            case 3:
-                                ratings[2] += 1
-                                break;
-                            case 2:
-                                ratings[3] += 1
-                                break;
-                            case 1:
-                                ratings[4] += 1
-                                break;
-                        }
+                // Get the reviews from the data
+                console.log(data)
+                // Get every review and sort it
+                for (const review of data['reviews']){
+                    switch (review.rating) {
+                        case 5:
+                            ratings[0] += 1
+                            break;
+                        case 4:
+                            ratings[1] += 1
+                            break;
+                        case 3:
+                            ratings[2] += 1
+                            break;
+                        case 2:
+                            ratings[3] += 1
+                            break;
+                        case 1:
+                            ratings[4] += 1
+                            break;
                     }
+                }
+                var totalRatings = ratings[0] + ratings[1] + ratings[2] + ratings[3] + ratings[4]
+                ratingsPercent[0] = ratings[0] / totalRatings * 100
+                ratingsPercent[1] = ratings[1] / totalRatings * 100
+                ratingsPercent[2] = ratings[2] / totalRatings * 100
+                ratingsPercent[3] = ratings[3] / totalRatings * 100
+                ratingsPercent[4] = ratings[4] / totalRatings * 100
 
-                    return ratings;
-                }).then(function(data){
-                    buildCharts(ratings)
-                })
+                buildCharts(ratingsPercent)
                 
 }
 
@@ -143,6 +168,7 @@ function buildCharts(data){
                 ],
                 borderWidth: 1
             }]
+            
         }
     });
 
@@ -175,6 +201,21 @@ function buildCharts(data){
             scales: {
                 y: {
                     beginAtZero: true
+                }
+            },
+            tooltips: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.dataset.label || '';
+
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.parsed.y !== null) {
+                            label += '%'
+                        }
+                        return label;
+                    }
                 }
             }
         }
