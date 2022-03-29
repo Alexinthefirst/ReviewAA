@@ -35,7 +35,7 @@ var config = {
     password: '!ReviewAA1',
     server: process.env.SERVER_NAME,
     database: 'ReviewAA',
-    trustServerCertificate: true
+    trustServerCertificate: true,
 };
 
 // Call when accessing database
@@ -60,7 +60,6 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 // Base route
 app.get('/', (req, res) => {
         res.redirect('/start')
-    
 })
 
 // CONVERT THIS OVER TO GOOGLE SEARCH API FOR GENERAL REVIEWS, STILL USE GOOGLE MAPS REVIEWS FOR TOPICS FOR ADVANCED REPORTING
@@ -78,14 +77,21 @@ app.get('/reviews', (req, res) => {
         search.json(params, function(reviews) {
             res.json(reviews['reviews'])
         })
-        
     }
+
 })
 
 app.get('/reviewsDates', async (req, res) => {
     var reviews = await executeQuery(`SELECT * FROM ratingsDates WHERE userid = ${req.session.userid}`);
 
     res.json(reviews);
+
+})
+
+app.get('/currentUsername', async (req, res) => {
+    var data = await executeQuery(`SELECT username FROM accounts WHERE userid = ${req.session.userid}`);
+    
+    res.json(data);
 
 })
 
@@ -170,6 +176,10 @@ app.get('/underconstruction', (req, res) => {
     res.sendFile(path.join(__dirname + '/underconstruction.html'))
 })
 
+app.get('/payment', (req, res) => {
+    res.sendFile(path.join(__dirname + '/payment.html'))
+})
+
 // Login route, user facing
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname + '/login.html'));
@@ -206,7 +216,7 @@ app.post('/users/register', jsonParser, async (req, res) => {
             req.session.firstTimeLogin = true;
             req.session.userid = completeUser.recordset[0].userid;
 
-            res.redirect(/*307*/"/dashboard") // Log the user in
+            res.redirect(/*307*/"/start") // Log the user in
         } else {
             res.send("User already exists.")
         }
@@ -241,7 +251,7 @@ app.post('/users/login', async (req, res) => {
 
                 // Insert the login time to database
                 await executeQuery(`INSERT INTO logins VALUES (${user.recordset[0].userid}, 4.2, '${dateString}')`)
-                res.redirect('/dashboard')
+                res.redirect('/start')
             } else {
                 res.send("Cannot find user.")
             }

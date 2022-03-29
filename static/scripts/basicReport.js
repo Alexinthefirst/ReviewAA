@@ -63,6 +63,7 @@ function getDateData(){
         })
 }
 
+
 function getLastRating(){
     var ratingChange = 0.0;
     const options = {

@@ -3,25 +3,25 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,minimum-scale=1">
-		<link rel="icon" type="image/x-icon" href="/favicon.ico">
+		
 		<title>ReviewAA - Home</title>
         <!-- the form awesome library is used to add icons to our form -->
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
         <!-- include the stylesheet file -->
         <link href="/style.css" rel="stylesheet" type="text/css">
+		<!--icon-->
+		<link rel="icon" type="image/x-icon" href="img/small_logo_white.ico">
+
 
 		<style>
 			html{
 				background-color: #c8d8e4;
 			}
 
-			img {
-				width: 100%;
-			}
-
 			ul {
 			list-style-type: none;
 			padding: 0;
+			padding-right: 10px;
 			overflow: hidden;
 			background-color: #2b6777;
 			}
@@ -34,8 +34,9 @@
 			display: block;
 			color: white;
 			text-align: center;
-			padding: 14px 16px;
+			padding: 20px 16px;
 			text-decoration: none;
+			margin-top: 12px;
 			}
 
 			/* Change the link color to #111 (black) on hover */
@@ -65,7 +66,10 @@
 				width: 50%;
 				height: 680px;
 			}
-			.chart {border-style: solid;}
+			.chart {
+				border-style: solid;
+				width: 100%;
+			}
 			.register {
 				background-color: #52ab98;
 				color: white;
@@ -76,16 +80,39 @@
 			.register:hover{
 				background-color: #327969;
 			}
+			.logo{
+				display: block;
+				max-width:250px;
+				max-height:95px;
+				width: auto;
+				height: auto;
+				padding-left: 10px;
+				padding-top: 15px;
+				padding-bottom: 10px;
+				image-rendering: -webkit-optimize-contrast;
+			}
 		</style>
 
 	</head>
 	<body>
 		<div class="start">
 			<ul>
-				<li><a href="#" class="disabled"><b>ReviewAA - Home Page</b></a></li>
+				<!-- <li><a href="#" class="disabled"><b>ReviewAA - Home Page</b></a></li> -->
+				<li><img src ="img/big_logo_white.png" class="logo"></li>
 				<li style="float:right"><a class="active" href="/register">Register</a></li>
 				<li style="float:right"><a class="active" href="/login">Login</a></li>
 				<li style="float:right"><a class="active" href="/packages">Pricing</a></li>
+				<li style="float:right"><a class="active" href="/dashboard">Dashboard</a></li>
+				<!-- <li style="float:right">
+					<div class="dropdown">
+					<input type="image" width="45" height="45" src="img/menu_icon.png" alt="hi" class="dropbtn_img"></input>
+					<div class="dropdown-content">
+					  <a href="/packages">Pricing</a>
+					  <a href="/dashboard">Dashboard</a>
+					  <a href="/contacts">Contact Us</a>
+					</div>
+				  </div>
+				</li> -->
 			</ul>
 
 			<div class="contentleft">
