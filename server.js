@@ -80,7 +80,7 @@ app.get('/reviews', async (req, res) => {
         
         // Do the search and receive 10 results
         search.json(params, function(reviews) {
-            res.json(reviews['reviews'])
+            res.json(reviews)
         })
     }
 
@@ -284,7 +284,7 @@ app.post('/users/login', async (req, res) => {
 
                 // Insert the login time to database
                 await executeQuery(`INSERT INTO logins VALUES (${user.recordset[0].userid}, 4.2, '${dateString}')`)
-                res.redirect('/start')
+                res.redirect('/dashboard')
             } else {
                 res.send("Cannot find user.")
             }
