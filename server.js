@@ -109,27 +109,28 @@ app.get('/start', (req, res) => {
 
 // Packages page route
 app.get('/packages', (req, res) => {
-    if (req.session.loggedin){
         res.sendFile(path.join(__dirname + '/packages.html'));
-    } else {
-        res.redirect('/login')
-    }
+
 })
 
 // Payment page route
 app.get('/payment/:package', async (req, res) => {
-    // Move where this happens after payment processing is implemented
-    let ts = Date.now();
+    if (req.session.loggedin){
+        // Move where this happens after payment processing is implemented
+        let ts = Date.now();
 
-    let date_ob = new Date(ts);
-    let date = date_ob.getDate();
-    let month = date_ob.getMonth() + 1;
-    let year = date_ob.getFullYear();
-    var datefinal = year + "-" + month + "-" + date;
+        let date_ob = new Date(ts);
+        let date = date_ob.getDate();
+        let month = date_ob.getMonth() + 1;
+        let year = date_ob.getFullYear();
+        var datefinal = year + "-" + month + "-" + date;
 
-    //Saves plan selection to database for later use
-    await executeQuery(`INSERT INTO userPlans VALUES (${req.session.userid}, ${req.params["package"]}, '${datefinal}')`)
-    res.sendFile(path.join(__dirname + '/payment.html'));
+        //Saves plan selection to database for later use
+        await executeQuery(`INSERT INTO userPlans VALUES (${req.session.userid}, ${req.params["package"]}, '${datefinal}')`)
+        res.sendFile(path.join(__dirname + '/payment.html'));
+    } else {
+        res.redirect('/login')
+    }
 })
 
 // Dashboard page route
@@ -197,6 +198,13 @@ app.get('/users', async (req, res) => {
     res.send("Access Denied.");
 })
 
+app.get('/users/logout', async (req, res) => {
+    req.session.loggedin = false;
+    req.session.username = null;
+    req.session.userid = null;
+    res.redirect('/start')
+});
+
 // Used to register a new user
 app.post('/users/register', jsonParser, async (req, res) => {
     try {
@@ -216,7 +224,7 @@ app.post('/users/register', jsonParser, async (req, res) => {
             req.session.firstTimeLogin = true;
             req.session.userid = completeUser.recordset[0].userid;
 
-            res.redirect(/*307*/"/start") // Log the user in
+            res.redirect(/*307*/"/packages") // Log the user in
         } else {
             res.send("User already exists.")
         }
