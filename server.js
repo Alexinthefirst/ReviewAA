@@ -318,6 +318,33 @@ app.post('/users/register', jsonParser, async (req, res) => {
    
 })
 
+// Used to get info for current user
+app.get('/user', async (req, res) => {
+    console.log("Getting user")
+    res.json(await executeQuery(`Select * FROM accounts WHERE userid = ${req.session.userid}`))
+})
+
+app.post('/users/update', async (req, res) => {
+    if (req.body.username != "" && req.body.email != ""){
+        await executeQuery(`UPDATE accounts SET username = '${req.body.username}', email = '${req.body.email}' WHERE userid = ${req.session.userid}`)
+    } else if (req.body.email == ""){
+        await executeQuery(`UPDATE accounts SET username = '${req.body.username}' WHERE userid = ${req.session.userid}`)
+    } else if (req.body.username == ""){
+        await executeQuery(`UPDATE accounts SET email = '${req.body.email}' WHERE userid = ${req.session.userid}`)
+    }
+
+    // Change Password
+    if (req.body.password != "" && req.body.password2 != ""){
+        if (req.body.password == req.body.password2) {
+            // Hash and salt password
+            const hashPassword = await bcrypt.hash(req.body.password, 10)
+            await executeQuery(`UPDATE accounts SET password = '${hashPassword}' WHERE userid = ${req.session.userid}`)
+        }
+    }
+    res.redirect('/profile')
+    
+    
+});
 // Used to login
 app.post('/users/login', async (req, res) => {
     

@@ -10,6 +10,7 @@
         <link href="/style.css" rel="stylesheet" type="text/css">
         <!--icon-->
 		<link rel="icon" type="image/x-icon" href="img/small_logo_white.ico">
+        <script src='/scripts/profile.js'></script>
 	</head>
 	<body>
         <div class="start">
@@ -19,12 +20,12 @@
 			<div class="contentleft">
             
 			<h1>Customize your profile</h1>
-			<form action="/users/login" method="post">
+			<form action="/users/update" method="post">
                 <br>
 				<label for="username">
 					<p>Username</p>
 				</label>
-				<input type="text" name="username" placeholder="Username" id="username" disabled>
+				<input type="text" name="username" placeholder="Username" id="username">
                 <br>
                 <br>
 				<label for="password">
@@ -39,16 +40,10 @@
 				<input type="password2" name="password2" id="password2">
                 <br>
                 <br>
-                <label for="fullName">
-					<p>Name</p>
+                <label for="email">
+					<p>Email</p>
 				</label>
-				<input type="fullName" name="fullName" id="fullName">
-                <br>
-                <br>
-                <label for="companyName">
-					<p>Company name</p>
-				</label>
-				<input type="companyName" name="companyName" id="companyName">
+				<input type="email" name="email" id="email">
                 <br>
                 <br>
                 <label for="package">
