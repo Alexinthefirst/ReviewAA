@@ -130,11 +130,41 @@ function getLastRating(){
 function buildDateChart(data){
     var date = new Date()
 
+    // Hacky way to fix new registered users
+    if (data.recordset[0] === undefined){
+        const ctxLine = document.getElementById('myChartLine').getContext('2d');
+        const myChartLine = new Chart(ctxLine, {
+        type: 'line',
+        data: {
+            labels: ['April ' + date.getDate(), 'May ' + date.getDate(), 'June ' + date.getDate(), 'July ' + date.getDate(), 'August ' + date.getDate(), 'September ' + date.getDate(), 'October ' + date.getDate(), 'November ' + date.getDate(), 'December ' + date.getDate(), 'January ' + date.getDate(), 'February ' + date.getDate(), 'March ' + date.getDate(), 'April ' + date.getDate()],
+            datasets: [{
+                label: 'Change',
+                data: /*data*/[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4.1],
+                fill: true,
+                backgroundColor: [
+                    'rgba(102, 255, 102, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(102, 255, 102, 1)',
+                ],
+                tension: 0
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    }
+
     const ctxLine = document.getElementById('myChartLine').getContext('2d');
     const myChartLine = new Chart(ctxLine, {
         type: 'line',
         data: {
-            labels: ['March ' + date.getDate(), 'April ' + date.getDate(), 'May ' + date.getDate(), 'June ' + date.getDate(), 'July ' + date.getDate(), 'August ' + date.getDate(), 'September ' + date.getDate(), 'October ' + date.getDate(), 'November ' + date.getDate(), 'December ' + date.getDate(), 'January ' + date.getDate(), 'February ' + date.getDate(), 'March ' + date.getDate()],
+            labels: ['April ' + date.getDate(), 'May ' + date.getDate(), 'June ' + date.getDate(), 'July ' + date.getDate(), 'August ' + date.getDate(), 'September ' + date.getDate(), 'October ' + date.getDate(), 'November ' + date.getDate(), 'December ' + date.getDate(), 'January ' + date.getDate(), 'February ' + date.getDate(), 'March ' + date.getDate(), 'April ' + date.getDate()],
             datasets: [{
                 label: 'Change',
                 data: /*data*/[data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[1].rating, data.recordset[2].rating, data.recordset[3].rating, data.recordset[4].rating],

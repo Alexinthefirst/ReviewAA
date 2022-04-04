@@ -9,6 +9,8 @@ const bodyParser = require("body-parser"); // JSON parser
 const { response } = require("express");
 const SerpApi = require("google-search-results-nodejs")
 const chart = require('chart.js');
+const { redirect } = require("express/lib/response");
+const e = require("express");
 
 
 var search = new SerpApi.GoogleSearch(process.env.REVIEW_API_KEY)
@@ -70,6 +72,10 @@ app.get('/reviews', async (req, res) => {
     if (true/* googleReviews = true*/ ){ // For google reviews, will edit later as this is our only one right now
         var dataid = await executeQuery(`SELECT dataid FROM accounts WHERE userid = ${req.session.userid}`)
         
+        if (dataid === undefined){
+            console.log("No Data ID found")
+        }
+
         console.log(dataid)
 
         const params = { // Set up the parameters to use, these default ones should work the best
@@ -98,11 +104,20 @@ app.post('/dataid', (req, res) => {
 
     search.json(params, function(data) {
         console.log(data['place_results']);
-        var place = data['place_results'];
-        console.log(place.data_id)
-        executeQuery(`UPDATE accounts SET dataid = '${place.data_id}' WHERE userid = ${req.session.userid}`)
+        if (data['place_results'] === undefined){
+            res.redirect('urlLanding2')
+        } 
+        else {
+            var place = data['place_results'];
+            console.log(place.data_id)
+            executeQuery(`UPDATE accounts SET dataid = '${place.data_id}' WHERE userid = ${req.session.userid}`)
+            if (req.session.firstTimeLogin){
+                res.redirect('/basicreport')
+            } else {
+                res.redirect('/dashboard')
+            }
+        }
     })
-    res.redirect('/dashboard')
 })
 
 // Get objects for use in time graph
@@ -167,7 +182,7 @@ app.get('/payment/:package', async (req, res) => {
 app.get('/dashboard', (req, res) => {
     if (req.session.loggedin){
         if (req.session.firstTimeLogin){
-            res.redirect('/basicreport')
+            res.redirect('/urlLanding')
         } else {
             res.sendFile(path.join(__dirname + '/dashboard.html'));
         }
@@ -177,6 +192,7 @@ app.get('/dashboard', (req, res) => {
 })
 
 // Basic report page route
+// While technically this page can be access before entering a URL and it crashes, it is exceedingly hard to do without knowing how to do it, so I will ignore the issue until later
 app.get('/basicreport', (req, res) => {
     if (req.session.loggedin){
         if (req.session.firstTimeLogin){
@@ -204,12 +220,30 @@ app.get('/contacts', (req, res) => {
         res.sendFile(path.join(__dirname + '/contacts.html'));
 })
 
+// Normal URL page
 app.get('/urlLanding', (req, res) => {
-    res.sendFile(path.join(__dirname + '/url.html'))
+    if (req.session.loggedin){
+        res.sendFile(path.join(__dirname + '/url.html'))
+    } else {
+        res.redirect('/login')
+    }
+})
+
+// Failure URL page
+app.get('/urlLanding2', (req, res) => {
+    if (req.session.loggedin){
+        res.sendFile(path.join(__dirname + '/urlFail.html'))
+    } else {
+        res.redirect('/login')
+    }
 })
 
 app.get('/profile', (req, res) => {
-    res.sendFile(path.join(__dirname + '/profileEditing.html'))
+    if (req.session.loggedin){
+        res.sendFile(path.join(__dirname + '/profileEditing.html'))
+    } else {
+        res.redirect('/login')
+    }
 })
 
 app.get('/underconstruction', (req, res) => {
@@ -217,7 +251,11 @@ app.get('/underconstruction', (req, res) => {
 })
 
 app.get('/payment', (req, res) => {
-    res.sendFile(path.join(__dirname + '/payment.html'))
+    if (req.session.loggedin){
+        res.sendFile(path.join(__dirname + '/payment.html'))
+    } else {
+        res.redirect('/login')
+    }
 })
 
 // Login route, user facing
@@ -262,6 +300,10 @@ app.post('/users/register', jsonParser, async (req, res) => {
             // Later should change this to redirect, then hold database column that knows if the paid or not and redirect them based on that
             req.session.firstTimeLogin = true;
             req.session.userid = completeUser.recordset[0].userid;
+
+            var dateString = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+            await executeQuery(`INSERT INTO logins VALUES (${completeUser.recordset[0].userid}, 4.2, '${dateString}')`)
 
             res.redirect(/*307*/"/packages") // Log the user in
         } else {
