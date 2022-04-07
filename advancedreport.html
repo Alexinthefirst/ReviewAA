@@ -1,184 +1,202 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,minimum-scale=1">
-		<title>ReviewAA - Basic Report</title>
-        <!-- the form awesome library is used to add icons to our form -->
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-        <!-- include the stylesheet file -->
-        <!-- <link href="/style.css" rel="stylesheet" type="text/css"> -->
-        <!--scripts-->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src='/scripts/advancedReport.js'></script>
-        <!--icon-->
-		<link rel="icon" type="image/x-icon" href="img/small_logo_white.ico">
-        
-		<style>
-            *{
-                font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
-                font-size: 16px;
-            }
-			html{
-				background-color: #c8d8e4;
-			}
 
-			img {
-				width: 100%;
-			}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <title>ReviewAA - Basic Report</title>
+    <!-- the form awesome library is used to add icons to our form -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <!-- include the stylesheet file -->
+    <!-- <link href="/style.css" rel="stylesheet" type="text/css"> -->
+    <!--scripts-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src='/scripts/advancedReport.js'></script>
+    <!--icon-->
+    <link rel="icon" type="image/x-icon" href="img/small_logo_white.ico">
 
-			ul {
+    <style>
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        html {
+            background-color: #c8d8e4;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        ul {
             list-style-type: none;
-			padding: 0;
-			padding-right: 10px;
-			overflow: hidden;
-			background-color: #65ac84;
-			}
+            padding: 0;
+            padding-right: 10px;
+            overflow: hidden;
+            background-color: #65ac84;
+        }
 
-			li {
-			float: left;
-			}
+        li {
+            float: left;
+        }
 
-			li a {
-			display: block;
-			color: white;
-			text-align: center;
-			padding: 14px 16px;
-			text-decoration: none;
-			}
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
 
-			/* Change the link color to #111 (black) on hover */
-			li a:hover {
-			background-color: #35694c;
-			}
+        /* Change the link color to #111 (black) on hover */
+        li a:hover {
+            background-color: #35694c;
+        }
 
-			.disabled {
-			pointer-events: none;
-			cursor: default;
-			font-size: large;
-			}
+        .disabled {
+            pointer-events: none;
+            cursor: default;
+            font-size: large;
+        }
 
-			.contentleft {
-				background-color: #f2f2f2;
-				padding: 55px;
-                padding-top: 20px;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                -webkit-transform: translate(-50%, -50%);
-                transform: translate(-50%, -50%);
-                margin-top: 2.5%;
-                height: 90%;
-                text-align: center;
-			}
-			.button {
-				background-color: #52ab98;
-				color: white;
-				padding: 10px 35px;
-				text-decoration: none;
-			}
-            .button:hover{
-				background-color: #327969;
-			}
+        .contentleft {
+            background-color: #f2f2f2;
+            padding: 55px;
+            padding-top: 20px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            margin-top: 2.5%;
+            height: 90%;
+            text-align: center;
+        }
 
-            .top{
-                text-align: center;
-                background-color: #f2f2f2;
-            }
-            .charts {
-                margin: auto;
-                width: 90%;
-                height: 60%;
-                display: flex;
-            }
-            .chart{
-                margin-left: 5px;
-                margin-bottom: 10px;
-                width: 30%;
-                height: 30%;
-            }
-            canvas{
-                border: 2px solid #65ac84;
-            }
-            h3{
-                text-align: center;
-            }
-            .start {
-                background-color: #f2f2f2;
-                margin-top: 20px;
-                padding-bottom: 1px;
-            }
-            table, th, td {
-                border: 1px solid black;
-                border-collapse: collapse;
-                border-color: #65ac84;
-            }
-            th, td {
-                width: 100px;
-            }
-            .topics {
-                margin: auto;
-                padding-top: 50px;
-                text-align: center;
-                width: 50%;
-            }
-            .recommendations {
-                margin: auto;
-                padding-top: 50px;
-                text-align: center;
-                width: 50%;
-            }
+        .button {
+            background-color: #52ab98;
+            color: white;
+            padding: 10px 35px;
+            text-decoration: none;
+        }
 
-            .disclaimer {
-                padding-top: 100px;
-            }
-        </style>
-	</head>
-	<body>
-			<ul>
-				<li><a class="active" href="/dashboard">&#9665; Back</a></li>
-			</ul>
-            <div class="start">
-            <div class="top">
-                <h1 id="businessName" style="font-size: 40px">Advanced Report</h1>
-                <h1 id="totalRating" style="font-size: 30px; color: goldenrod;"></h1>
-                <h1 id="reviewCount"></h1>
-                <h2 id="last" style="font-size: 30px"></h2>
+        .button:hover {
+            background-color: #327969;
+        }
+
+        .top {
+            text-align: center;
+            background-color: #f2f2f2;
+        }
+
+        .charts {
+            margin: auto;
+            width: 90%;
+            height: 60%;
+            display: flex;
+        }
+
+        .chart {
+            margin-left: 5px;
+            margin-bottom: 10px;
+            width: 30%;
+            height: 30%;
+        }
+
+        canvas {
+            border: 2px solid #65ac84;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        .start {
+            background-color: #f2f2f2;
+            margin-top: 20px;
+            padding-bottom: 1px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            border-color: #65ac84;
+        }
+
+        th,
+        td {
+            width: 100px;
+        }
+
+        .topics {
+            margin: auto;
+            padding-top: 50px;
+            text-align: center;
+            width: 50%;
+        }
+
+        .recommendations {
+            margin: auto;
+            padding-top: 50px;
+            text-align: center;
+            width: 50%;
+        }
+
+        .disclaimer {
+            padding-top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li><a class="active" href="/dashboard">&#9665; Back</a></li>
+    </ul>
+    <div class="start">
+        <div class="top">
+            <h1 id="businessName" style="font-size: 40px">Advanced Report</h1>
+            <h1 id="totalRating" style="font-size: 30px; color: goldenrod;"></h1>
+            <h1 id="reviewCount"></h1>
+            <h2 id="last" style="font-size: 30px"></h2>
+        </div>
+        <div class="charts">
+            <div class="chart">
+                <h3>Fake Ratings</h3>
+                <canvas id="myChartPie"></canvas>
             </div>
-            <div class="charts">
-                <div class="chart">
-                    <h3>Fake Ratings</h3>
-                    <canvas id="myChartPie"></canvas>
-                </div>
-                <div class="chart">
-                    <h3>Ratings Distribution</h3>
-                    <canvas id="myChartBar"></canvas>
-                </div>
-                <div class="chart">
-                    <h3>Change in Ratings</h3>
-                    <canvas id="myChartLine"></canvas>
-                </div>
+            <div class="chart">
+                <h3>Ratings Distribution</h3>
+                <canvas id="myChartBar"></canvas>
             </div>
-
-            <div id="topics" class="topics">
-                <h1 style="font-size: 30px">Popular Topics:</h1>
-                <table id="topicTable" style="width: 100%">
-                    <tr>
-                        <th>Topic</th>
-                        <th>Mentions</th>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="recommendations">
-                <h1 style="font-size: 30px">Recommendations:</h1>
-                <h1>Please wait while recommendations are analyzed</h1>
-            </div>
-
-            <div class="disclaimer">
-                <hr style="color: #c8d8e4">
-                <h3>All review data is aggregated from Google reviews</h3>
+            <div class="chart">
+                <h3>Change in Ratings</h3>
+                <canvas id="myChartLine"></canvas>
             </div>
         </div>
-	</body>
+
+        <div id="topics" class="topics">
+            <h1 style="font-size: 30px">Popular Topics:</h1>
+            <table id="topicTable" style="width: 100%">
+                <tr>
+                    <th>Topic</th>
+                    <th>Mentions</th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="recommendations">
+            <h1 style="font-size: 30px">Recommendations:</h1>
+            <h1>Please wait while recommendations are analyzed</h1>
+        </div>
+
+        <div class="disclaimer">
+            <hr style="color: #c8d8e4">
+            <h3>All review data is aggregated from Google reviews</h3>
+        </div>
+    </div>
+</body>
+
 </html>

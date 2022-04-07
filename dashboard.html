@@ -1,223 +1,235 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,minimum-scale=1">
-		<title>ReviewAA - Dashboard</title>
-        <!-- the form awesome library is used to add icons to our form -->
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-        <!-- include the stylesheet file -->
-        <link href="/style.css" rel="stylesheet" type="text/css">
-        <!--scripts-->
-        <script src='/scripts/dashboard.js'></script>
-        <!--icon-->
-		<link rel="icon" type="image/x-icon" href="img/small_logo_white.ico">
 
-	</head>
-	<body>
-        <div class="banner">
-            <a class="active" id="back" href="/start">&#9665; Back</a>
-            <h1 id="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <title>ReviewAA - Dashboard</title>
+    <!-- the form awesome library is used to add icons to our form -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <!-- include the stylesheet file -->
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <!--scripts-->
+    <script src='/scripts/dashboard.js'></script>
+    <!--icon-->
+    <link rel="icon" type="image/x-icon" href="img/small_logo_white.ico">
+
+</head>
+
+<body>
+    <div class="banner">
+        <a class="active" id="back" href="/start">&#9665; Back</a>
+        <h1 id="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </h1>
+    </div>
+
+    <a href="/urlLanding">
+        <div class="square">
+            <div class="content">
+                <div class="table">
+                    <div class="table-cell">
+                        <img class="rs" src="img/url_icon.png" />
+                        <p>Update URLs</p>
+                        <p style="font-size: small; text-decoration: underline;">Click <span style="color: #f47b5a">
+                                here</span> to get started!</p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </a>
 
-        <a href="/urlLanding">
-            <div class="square">
-                <div class="content">
-                     <div class="table">
-                         <div class="table-cell">
-                             <img class="rs" src="img/url_icon.png"/>
-                             <p>Update URLs</p>
-                             <p style="font-size: small; text-decoration: underline;">Click <span style="color: #f47b5a"> here</span> to get started!</p>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-        </a>
+    <a href="/basicreport">
+        <div class="square">
+            <div class="content">
+                <div class="table">
+                    <div class="table-cell">
+                        <img class="rs" src="img/basic_report_icon.png" />
+                        <p>Basic Report</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    <a id="advancedButton" href="/advancedreport">
+        <div id="advancedSquare" class="square">
+            <div class="content">
+                <div class="table">
+                    <div class="table-cell">
+                        <img class="rs" src="img/advanced_report_icon.png" />
+                        <p>Advanced Report</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    <a href="/underconstruction">
+        <div class="square">
+            <div class="content">
+                <div class="table">
+                    <div class="table-cell">
+                        <img class="rs" src="img/comp_reporting_icon.png" />
+                        <p>Competitor Reporting</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    <a href="/profile">
+        <div class="square">
+            <div class="content">
+                <div class="table">
+                    <div class="table-cell">
+                        <img class="rs" src="img/profile_icon.png" />
+                        <p>Profile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    <a href="/contacts">
+        <div class="square">
+            <div class="content">
+                <div class="table">
+                    <div class="table-cell">
+                        <img class="rs" src="img/contact_icon.png" />
+                        <p>Contact Us</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    <a href="/users/logout">
+        <div class="square">
+            <div class="content">
+                <div class="table">
+                    <div class="table-cell">
+                        <img class="rs" src="img/logout_icon.png" />
+                        <p>Logout</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
 
-        <a href="/basicreport">
-            <div class="square">
-                <div class="content">
-                     <div class="table">
-                         <div class="table-cell">
-                             <img class="rs" src="img/basic_report_icon.png"/>
-                             <p>Basic Report</p>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-        </a>
-        <a href="/advancedreport">
-            <div class="square">
-                <div class="content">
-                     <div class="table">
-                         <div class="table-cell">
-                             <img class="rs" src="img/advanced_report_icon.png"/>
-                             <p>Advanced Report</p>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-        </a>
-        <a href="/underconstruction">
-            <div class="square">
-                <div class="content">
-                     <div class="table">
-                         <div class="table-cell">
-                             <img class="rs" src="img/comp_reporting_icon.png"/>
-                             <p>Competitor Reporting</p>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-        </a>
-        <a href="/profile">
-            <div class="square">
-                <div class="content">
-                     <div class="table">
-                         <div class="table-cell">
-                             <img class="rs" src="img/profile_icon.png"/>
-                             <p>Profile</p>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-        </a>
-        <a href="/contacts">
-            <div class="square">
-                <div class="content">
-                     <div class="table">
-                         <div class="table-cell">
-                            <img class="rs" src="img/contact_icon.png"/>
-                             <p>Contact Us</p>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-        </a>
-        <a href="/users/logout">
-            <div class="square">
-                <div class="content">
-                     <div class="table">
-                         <div class="table-cell">
-                            <img class="rs" src="img/logout_icon.png"/>
-                             <p>Logout</p>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-        </a>
-        
 
-        <style>
+    <style>
+        .square {
+            float: left;
+            position: relative;
+            width: 18%;
+            padding-bottom: 18%;
+            /* = width for a 1:1 aspect ratio */
+            margin: 1.66%;
+            background-color: #1E1E1E;
+            overflow: hidden;
+        }
 
-            .square {
-                float:left;
-                position: relative;
-                width: 18%;
-                padding-bottom : 18%; /* = width for a 1:1 aspect ratio */
-                margin:1.66%;
-                background-color:#1E1E1E;
-                overflow:hidden;
-            }
-
-            /* not sure why this breaks everything */
-            /* .square:hover{
+        /* not sure why this breaks everything */
+        /* .square:hover{
                 border:solid 1px white;
             } */
-            
-            .content {
-                position:absolute;
-                height:90%; /* = 100% - 2*5% padding */
-                width:90%; /* = 100% - 2*5% padding */
-                padding: 10%;
-    
-            }
-            .table{
-                display:table;
-                width:100%;
-                height:100%;
-            }
 
-            .table-cell{
-                display:table-cell;
-                vertical-align:middle;
-                text-align: center;
-            }
+        .content {
+            position: absolute;
+            height: 90%;
+            /* = 100% - 2*5% padding */
+            width: 90%;
+            /* = 100% - 2*5% padding */
+            padding: 10%;
 
-            /*  For list */
-            ul{
-                text-align:left;
-                margin:5% 0 0;
-                padding:0;
-                list-style-position:inside;
-            }
+        }
 
-            li{
-                margin: 0 0 0 5%;
-                padding:0;
-            }
+        .table {
+            display: table;
+            width: 100%;
+            height: 100%;
+        }
 
-            /*  For responsive images */
+        .table-cell {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
 
-            .content .rs{
-                width:100%;
-                height:100%;
-                margin-left:6%;
-            }
+        /*  For list */
+        ul {
+            text-align: left;
+            margin: 5% 0 0;
+            padding: 0;
+            list-style-position: inside;
+        }
 
-            body {
-                font-size:20px;
-                font-family: 'Lato',verdana, sans-serif;
-                color: #fff;
-                text-align:center;
-                background-color: #435165;
-            }
+        li {
+            margin: 0 0 0 5%;
+            padding: 0;
+        }
 
-            p{
-                margin:0;
-                padding:0;
-                text-align:center;
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                font-size: 18px;
-            }
+        /*  For responsive images */
 
-            a{
-                color: #fff;
-            }
+        .content .rs {
+            width: 100%;
+            height: 100%;
+            margin-left: 6%;
+        }
 
-            .banner{
-                margin-top: 0px;
-                padding-top:10px;
-                padding-bottom:10px;
-                width: 100%;
-                height: 10%;
-                background-color: #65ac84;
-                color: white;
-            }
+        body {
+            font-size: 20px;
+            font-family: 'Lato', verdana, sans-serif;
+            color: #fff;
+            text-align: center;
+            background-color: #435165;
+        }
 
-            h1{
-                font-size: xx-large;
-            }
-            #back{
-                text-align: left; 
-                float: left; 
-                margin-top: 18px; 
-                margin-left: 20px; 
-                text-decoration: none; 
-                font-weight: bold;
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                color:white;
-                padding: 10px;
-            }
-            #back:hover{
-                background-color: #35694c;
-            }
-            html{
-                background-color: #414142;
-            }
-            #title{
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            }
-        </style>
-	</body>
+        p {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+
+        a {
+            color: #fff;
+        }
+
+        .banner {
+            margin-top: 0px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            width: 100%;
+            height: 10%;
+            background-color: #65ac84;
+            color: white;
+        }
+
+        h1 {
+            font-size: xx-large;
+        }
+
+        #back {
+            text-align: left;
+            float: left;
+            margin-top: 18px;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            color: white;
+            padding: 10px;
+        }
+
+        #back:hover {
+            background-color: #35694c;
+        }
+
+        html {
+            background-color: #414142;
+        }
+
+        #title {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+    </style>
+</body>
+
 </html>

@@ -19,9 +19,9 @@ const users = [] // For testing, not used
 
 // Session setup
 app.use(session({
-	secret: 'reviewAbA',
-	resave: true,
-	saveUninitialized: true
+    secret: 'reviewAbA',
+    resave: true,
+    saveUninitialized: true
 }));
 
 // Express setup
@@ -42,34 +42,34 @@ var config = {
 // Call when accessing database
 async function executeQuery(query) {
     try {
-        await sql.connect(config) 
+        await sql.connect(config)
         const result = await sql.query(query)
         //console.log(result)
         return result;
     } catch (err) {
         console.log(err)
     }
-    
+
 }
 
 // create application/json parser
 var jsonParser = bodyParser.json()
- 
+
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // Base route
 app.get('/', (req, res) => {
-        res.redirect('/start')
+    res.redirect('/start')
 })
 
 // CONVERT THIS OVER TO GOOGLE SEARCH API FOR GENERAL REVIEWS, STILL USE GOOGLE MAPS REVIEWS FOR TOPICS FOR ADVANCED REPORTING
 // Route to receive reviews from every site in profile
 // Remember to fix this so not just anyone can use this route and waste my monthly allowance 
 app.get('/reviews', async (req, res) => {
-    if (true/* googleReviews = true*/ ){ // For google reviews, will edit later as this is our only one right now
+    if (true/* googleReviews = true*/) { // For google reviews, will edit later as this is our only one right now
         var dataid = await executeQuery(`SELECT dataid FROM accounts WHERE userid = ${req.session.userid}`)
-        
+
         console.log(dataid)
 
         const params = { // Set up the parameters to use, these default ones should work the best
@@ -77,9 +77,10 @@ app.get('/reviews', async (req, res) => {
             hl: "en",
             data_id: dataid.recordset[0].dataid,
         }
-        
+
         // Do the search and receive 10 results
-        search.json(params, function(reviews) {
+        search.json(params, function (reviews) {
+
             res.json(reviews)
         })
     }
@@ -96,10 +97,10 @@ app.post('/dataid', (req, res) => {
         hl: "en",
     };
 
-    search.json(params, function(data) {
-        console.log(data['place_results']);
+    search.json(params, function (data) {
+        console.log("hi: " + data['place_results']);
         var place = data['place_results'];
-        console.log(place.data_id)
+        console.log("data id: " + place.data_id)
         executeQuery(`UPDATE accounts SET dataid = '${place.data_id}' WHERE userid = ${req.session.userid}`)
     })
     res.redirect('/dashboard')
@@ -115,7 +116,21 @@ app.get('/reviewsDates', async (req, res) => {
 
 app.get('/currentUsername', async (req, res) => {
     var data = await executeQuery(`SELECT username FROM accounts WHERE userid = ${req.session.userid}`);
-    
+
+    res.json(data);
+
+})
+
+app.get('/currentPlan', async (req, res) => {
+    var data = await executeQuery(`SELECT TOP 1 * FROM userPlans LEFT JOIN paymentPlans ON userPlans.planid = paymentPlans.planId WHERE userid =  ${req.session.userid} AND dateExpiry > CURRENT_TIMESTAMP ORDER BY dateSubscribed DESC`)
+    res.json(data);
+
+})
+
+
+app.get('/planDetails', async (req, res) => {
+    var data = await executeQuery(`SELECT * FROM paymentPlans WHERE planId = ${req.session.planToBuy}`);
+
     res.json(data);
 
 })
@@ -134,30 +149,78 @@ app.get('/start', (req, res) => {
     } else {
         res.sendFile(path.join(__dirname + '/start.html'));
     }
-    
+
 })
 
 // Packages page route
 app.get('/packages', (req, res) => {
-        res.sendFile(path.join(__dirname + '/packages.html'));
-
+    res.sendFile(path.join(__dirname + '/packages.html'));
 })
 
 // Payment page route
 app.get('/payment/:package', async (req, res) => {
-    if (req.session.loggedin){
-        // Move where this happens after payment processing is implemented
-        let ts = Date.now();
-
-        let date_ob = new Date(ts);
-        let date = date_ob.getDate();
-        let month = date_ob.getMonth() + 1;
-        let year = date_ob.getFullYear();
-        var datefinal = year + "-" + month + "-" + date;
-
-        //Saves plan selection to database for later use
-        await executeQuery(`INSERT INTO userPlans VALUES (${req.session.userid}, ${req.params["package"]}, '${datefinal}')`)
+    if (req.session.loggedin) {
+        req.session.planToBuy = req.params["package"];
         res.sendFile(path.join(__dirname + '/payment.html'));
+    } else {
+        res.redirect('/login')
+    }
+
+})
+
+// app.post('/users/update', async (req, res) => {
+//     if (req.body.username != "" && req.body.email != ""){
+//         await executeQuery(`UPDATE accounts SET username = '${req.body.username}', email = '${req.body.email}' WHERE userid = ${req.session.userid}`)
+//     } else if (req.body.email == ""){
+//         await executeQuery(`UPDATE accounts SET username = '${req.body.username}' WHERE userid = ${req.session.userid}`)
+//     } else if (req.body.username == ""){
+//         await executeQuery(`UPDATE accounts SET email = '${req.body.email}' WHERE userid = ${req.session.userid}`)
+//     }
+
+//     // Change Password
+//     if (req.body.password != "" && req.body.password2 != ""){
+//         if (req.body.password == req.body.password2) {
+//             // Hash and salt password
+//             const hashPassword = await bcrypt.hash(req.body.password, 10)
+//             await executeQuery(`UPDATE accounts SET password = '${hashPassword}' WHERE userid = ${req.session.userid}`)
+//         }
+//     }
+//     res.redirect('/profile')
+
+
+// });
+
+app.post('/paymentResult', async (req, res) => {
+    if (req.session.loggedin) {
+
+        // Convert card number to string, trim leading and trailing double quotes, then only save last 4 numbers of card for security reasons
+        var partialCardNumber = JSON.stringify(req.body.cardNumber);
+        partialCardNumber = partialCardNumber.slice(1, -1);
+        partialCardNumber = partialCardNumber.substring(partialCardNumber.length - 4);
+
+        // Log payment result in database
+        await executeQuery(`INSERT INTO paymentLog VALUES ('${req.body.fullName}', '${req.body.email}', '${req.body.nameOnCard}', '${partialCardNumber}', ${req.body.expMonth},
+            ${req.body.expYear}, ${req.body.cvv}, CURRENT_TIMESTAMP, ${req.session.userid}, '${req.body.result}', ${req.session.planToBuy})`);
+
+        //If purchase is successful, add record to userPlan table
+        if (req.body.result == "Payment success") {
+
+            var plan = await executeQuery(`SELECT * FROM paymentPlans WHERE planId = ${req.session.planToBuy}`);
+            var duration = plan.recordset[0].duration;
+            var name = plan.recordset[0].name;
+            console.log("d" + duration);
+
+            await executeQuery(`INSERT INTO userPlans VALUES (${req.session.userid}, ${req.session.planToBuy}, CURRENT_TIMESTAMP, DATEADD(day, ${duration} , CURRENT_TIMESTAMP))`);
+            // unset planToBuy after successful purchase
+            req.session.planToBuy = null;
+            req.session.plan = name;
+
+            res.sendFile(path.join(__dirname + '/paymentSuccess.html'));
+        } else {
+            console.log("redirect back");
+            res.sendFile(path.join(__dirname + '/paymentFailed.html'));
+        }
+
     } else {
         res.redirect('/login')
     }
@@ -165,8 +228,8 @@ app.get('/payment/:package', async (req, res) => {
 
 // Dashboard page route
 app.get('/dashboard', (req, res) => {
-    if (req.session.loggedin){
-        if (req.session.firstTimeLogin){
+    if (req.session.loggedin) {
+        if (req.session.firstTimeLogin) {
             res.redirect('/basicreport')
         } else {
             res.sendFile(path.join(__dirname + '/dashboard.html'));
@@ -178,8 +241,8 @@ app.get('/dashboard', (req, res) => {
 
 // Basic report page route
 app.get('/basicreport', (req, res) => {
-    if (req.session.loggedin){
-        if (req.session.firstTimeLogin){
+    if (req.session.loggedin) {
+        if (req.session.firstTimeLogin) {
             req.session.firstTimeLogin = false;
             res.sendFile(path.join(__dirname + '/basicreport.html'));
         } else {
@@ -190,10 +253,11 @@ app.get('/basicreport', (req, res) => {
     }
 })
 
+// Advanced report page route
 app.get('/advancedreport', (req, res) => {
-    if (req.session.loggedin){
+    if (req.session.loggedin) {
 
-            res.sendFile(path.join(__dirname + '/advancedreport.html'));
+        res.sendFile(path.join(__dirname + '/advancedreport.html'));
     } else {
         res.redirect('/login')
     }
@@ -201,7 +265,7 @@ app.get('/advancedreport', (req, res) => {
 
 // Contacts page route
 app.get('/contacts', (req, res) => {
-        res.sendFile(path.join(__dirname + '/contacts.html'));
+    res.sendFile(path.join(__dirname + '/contacts.html'));
 })
 
 app.get('/urlLanding', (req, res) => {
@@ -250,15 +314,14 @@ app.post('/users/register', jsonParser, async (req, res) => {
         // Check to see if the username already exists
         var user = await executeQuery(`Select * FROM accounts WHERE username = '${req.body.username}'`)
         // If user doesn't already exist
-        if (user.recordset.length < 1)
-        {
+        if (user.recordset.length < 1) {
             const hashPassword = await bcrypt.hash(req.body.password, 10) // Hashes and salts the password
-            
+
             var completeUser = await executeQuery(`INSERT INTO accounts (username, password, email) VALUES ('${req.body.username}', '${hashPassword}', '${req.body.email}'); SELECT SCOPE_IDENTITY() AS userid`)
             req.session.loggedin = true;
             req.session.username = req.body.username; // Log the user in via session instead of redirect to log in
             // Insert data in database
-            
+
             // Later should change this to redirect, then hold database column that knows if the paid or not and redirect them based on that
             req.session.firstTimeLogin = true;
             req.session.userid = completeUser.recordset[0].userid;
@@ -273,31 +336,46 @@ app.post('/users/register', jsonParser, async (req, res) => {
         res.status(500).send()
         console.log(ex)
     }
-   
+
 })
 
 // Used to login
 app.post('/users/login', async (req, res) => {
-    
+
     // Get the input
     let username = req.body.username;
     let password = req.body.password;
     var dateString = new Date().toISOString().slice(0, 19).replace('T', ' ');
     console.log(dateString)
     // Ensure the fields aren't empty
-    if (username && password){
+    if (username && password) {
 
         var user = await executeQuery(`Select * FROM accounts WHERE username = '${username}'`) // Get the user that has that username, will compare passwords in next step
         try {
             console.log(user.recordset[0].userid)
             // Compares two passwords
-            if (await bcrypt.compare(req.body.password, user.recordset[0].password)){
+            if (await bcrypt.compare(req.body.password, user.recordset[0].password)) {
                 req.session.loggedin = true;
                 req.session.username = username;
                 req.session.userid = user.recordset[0].userid;
 
                 // Insert the login time to database
                 await executeQuery(`INSERT INTO logins VALUES (${user.recordset[0].userid}, 4.2, '${dateString}')`)
+
+                // Check for user's plan
+                // TODO
+                var plan = await executeQuery(`SELECT TOP 1 * FROM userPlans LEFT JOIN paymentPlans ON userPlans.planid = paymentPlans.planId WHERE userid = ${user.recordset[0].userid} AND dateExpiry > CURRENT_TIMESTAMP ORDER BY dateSubscribed DESC`)
+                // Will return either 1 record with with name field describing plan OR no records meaning no active plan
+                // Set a session var for plan
+                if (plan.recordset.length > 0) {
+                    req.session.plan = plan.recordset[0].name;
+                    // req.session.plan = "test";
+                } else {
+                    req.session.plan = "No Plan";
+                }
+                console.log(req.session.plan);
+
+                // Redirect to dashboard
                 res.redirect('/dashboard')
             } else {
                 res.send("Cannot find user.")
