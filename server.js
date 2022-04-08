@@ -21,9 +21,9 @@ const users = [] // For testing, not used
 
 // Session setup
 app.use(session({
-	secret: 'reviewAbA',
-	resave: true,
-	saveUninitialized: true
+    secret: 'reviewAbA',
+    resave: true,
+    saveUninitialized: true
 }));
 
 // Express setup
@@ -44,35 +44,35 @@ var config = {
 // Call when accessing database
 async function executeQuery(query) {
     try {
-        await sql.connect(config) 
+        await sql.connect(config)
         const result = await sql.query(query)
         //console.log(result)
         return result;
     } catch (err) {
         console.log(err)
     }
-    
+
 }
 
 // create application/json parser
 var jsonParser = bodyParser.json()
- 
+
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // Base route
 app.get('/', (req, res) => {
-        res.redirect('/start')
+    res.redirect('/start')
 })
 
 // CONVERT THIS OVER TO GOOGLE SEARCH API FOR GENERAL REVIEWS, STILL USE GOOGLE MAPS REVIEWS FOR TOPICS FOR ADVANCED REPORTING
 // Route to receive reviews from every site in profile
 // Remember to fix this so not just anyone can use this route and waste my monthly allowance 
 app.get('/reviews', async (req, res) => {
-    if (true/* googleReviews = true*/ ){ // For google reviews, will edit later as this is our only one right now
+    if (true/* googleReviews = true*/) { // For google reviews, will edit later as this is our only one right now
         var dataid = await executeQuery(`SELECT dataid FROM accounts WHERE userid = ${req.session.userid}`)
-        
-        if (dataid === undefined){
+
+        if (dataid === undefined) {
             console.log("No Data ID found")
         }
 
@@ -83,9 +83,9 @@ app.get('/reviews', async (req, res) => {
             hl: "en",
             data_id: dataid.recordset[0].dataid,
         }
-        
+
         // Do the search and receive 10 results
-        search.json(params, function(reviews) {
+        search.json(params, function (reviews) {
             res.json(reviews)
         })
     }
@@ -102,16 +102,16 @@ app.post('/dataid', (req, res) => {
         hl: "en",
     };
 
-    search.json(params, function(data) {
+    search.json(params, function (data) {
         console.log(data['place_results']);
-        if (data['place_results'] === undefined){
+        if (data['place_results'] === undefined) {
             res.redirect('urlLanding2')
-        } 
+        }
         else {
             var place = data['place_results'];
             console.log(place.data_id)
             executeQuery(`UPDATE accounts SET dataid = '${place.data_id}' WHERE userid = ${req.session.userid}`)
-            if (req.session.firstTimeLogin){
+            if (req.session.firstTimeLogin) {
                 res.redirect('/basicreport')
             } else {
                 res.redirect('/dashboard')
@@ -130,7 +130,7 @@ app.get('/reviewsDates', async (req, res) => {
 
 app.get('/currentUsername', async (req, res) => {
     var data = await executeQuery(`SELECT username FROM accounts WHERE userid = ${req.session.userid}`);
-    
+
     res.json(data);
 
 })
@@ -149,18 +149,18 @@ app.get('/start', (req, res) => {
     } else {
         res.sendFile(path.join(__dirname + '/start.html'));
     }
-    
+
 })
 
 // Packages page route
 app.get('/packages', (req, res) => {
-        res.sendFile(path.join(__dirname + '/packages.html'));
+    res.sendFile(path.join(__dirname + '/packages.html'));
 
 })
 
 // Payment page route
 app.get('/payment/:package', async (req, res) => {
-    if (req.session.loggedin){
+    if (req.session.loggedin) {
         // Move where this happens after payment processing is implemented
         let ts = Date.now();
 
@@ -180,8 +180,8 @@ app.get('/payment/:package', async (req, res) => {
 
 // Dashboard page route
 app.get('/dashboard', (req, res) => {
-    if (req.session.loggedin){
-        if (req.session.firstTimeLogin){
+    if (req.session.loggedin) {
+        if (req.session.firstTimeLogin) {
             res.redirect('/urlLanding')
         } else {
             res.sendFile(path.join(__dirname + '/dashboard.html'));
@@ -194,8 +194,8 @@ app.get('/dashboard', (req, res) => {
 // Basic report page route
 // While technically this page can be access before entering a URL and it crashes, it is exceedingly hard to do without knowing how to do it, so I will ignore the issue until later
 app.get('/basicreport', (req, res) => {
-    if (req.session.loggedin){
-        if (req.session.firstTimeLogin){
+    if (req.session.loggedin) {
+        if (req.session.firstTimeLogin) {
             req.session.firstTimeLogin = false;
             res.sendFile(path.join(__dirname + '/basicreport.html'));
         } else {
@@ -207,9 +207,9 @@ app.get('/basicreport', (req, res) => {
 })
 
 app.get('/advancedreport', (req, res) => {
-    if (req.session.loggedin){
+    if (req.session.loggedin) {
 
-            res.sendFile(path.join(__dirname + '/advancedreport.html'));
+        res.sendFile(path.join(__dirname + '/advancedreport.html'));
     } else {
         res.redirect('/login')
     }
@@ -217,12 +217,12 @@ app.get('/advancedreport', (req, res) => {
 
 // Contacts page route
 app.get('/contacts', (req, res) => {
-        res.sendFile(path.join(__dirname + '/contacts.html'));
+    res.sendFile(path.join(__dirname + '/contacts.html'));
 })
 
 // Normal URL page
 app.get('/urlLanding', (req, res) => {
-    if (req.session.loggedin){
+    if (req.session.loggedin) {
         res.sendFile(path.join(__dirname + '/url.html'))
     } else {
         res.redirect('/login')
@@ -231,7 +231,7 @@ app.get('/urlLanding', (req, res) => {
 
 // Failure URL page
 app.get('/urlLanding2', (req, res) => {
-    if (req.session.loggedin){
+    if (req.session.loggedin) {
         res.sendFile(path.join(__dirname + '/urlFail.html'))
     } else {
         res.redirect('/login')
@@ -239,7 +239,7 @@ app.get('/urlLanding2', (req, res) => {
 })
 
 app.get('/profile', (req, res) => {
-    if (req.session.loggedin){
+    if (req.session.loggedin) {
         res.sendFile(path.join(__dirname + '/profileEditing.html'))
     } else {
         res.redirect('/login')
@@ -251,7 +251,7 @@ app.get('/underconstruction', (req, res) => {
 })
 
 app.get('/payment', (req, res) => {
-    if (req.session.loggedin){
+    if (req.session.loggedin) {
         res.sendFile(path.join(__dirname + '/payment.html'))
     } else {
         res.redirect('/login')
@@ -292,15 +292,14 @@ app.post('/users/register', jsonParser, async (req, res) => {
         // Check to see if the username already exists
         var user = await executeQuery(`Select * FROM accounts WHERE username = '${req.body.username}'`)
         // If user doesn't already exist
-        if (user.recordset.length < 1)
-        {
+        if (user.recordset.length < 1) {
             const hashPassword = await bcrypt.hash(req.body.password, 10) // Hashes and salts the password
-            
+
             var completeUser = await executeQuery(`INSERT INTO accounts (username, password, email) VALUES ('${req.body.username}', '${hashPassword}', '${req.body.email}'); SELECT SCOPE_IDENTITY() AS userid`)
             req.session.loggedin = true;
             req.session.username = req.body.username; // Log the user in via session instead of redirect to log in
             // Insert data in database
-            
+
             // Later should change this to redirect, then hold database column that knows if the paid or not and redirect them based on that
             req.session.firstTimeLogin = true;
             req.session.userid = completeUser.recordset[0].userid;
@@ -319,7 +318,7 @@ app.post('/users/register', jsonParser, async (req, res) => {
         res.status(500).send()
         console.log(ex)
     }
-   
+
 })
 
 // Used to get info for current user
@@ -329,16 +328,16 @@ app.get('/user', async (req, res) => {
 })
 
 app.post('/users/update', async (req, res) => {
-    if (req.body.username != "" && req.body.email != ""){
+    if (req.body.username != "" && req.body.email != "") {
         await executeQuery(`UPDATE accounts SET username = '${req.body.username}', email = '${req.body.email}' WHERE userid = ${req.session.userid}`)
-    } else if (req.body.email == ""){
+    } else if (req.body.email == "") {
         await executeQuery(`UPDATE accounts SET username = '${req.body.username}' WHERE userid = ${req.session.userid}`)
-    } else if (req.body.username == ""){
+    } else if (req.body.username == "") {
         await executeQuery(`UPDATE accounts SET email = '${req.body.email}' WHERE userid = ${req.session.userid}`)
     }
 
     // Change Password
-    if (req.body.password != "" && req.body.password2 != ""){
+    if (req.body.password != "" && req.body.password2 != "") {
         if (req.body.password == req.body.password2) {
             // Hash and salt password
             const hashPassword = await bcrypt.hash(req.body.password, 10)
@@ -346,25 +345,25 @@ app.post('/users/update', async (req, res) => {
         }
     }
     res.redirect('/profile')
-    
-    
+
+
 });
 // Used to login
 app.post('/users/login', async (req, res) => {
-    
+
     // Get the input
     let username = req.body.username;
     let password = req.body.password;
     var dateString = new Date().toISOString().slice(0, 19).replace('T', ' ');
     console.log(dateString)
     // Ensure the fields aren't empty
-    if (username && password){
+    if (username && password) {
 
         var user = await executeQuery(`Select * FROM accounts WHERE username = '${username}'`) // Get the user that has that username, will compare passwords in next step
         try {
             console.log(user.recordset[0].userid)
             // Compares two passwords
-            if (await bcrypt.compare(req.body.password, user.recordset[0].password)){
+            if (await bcrypt.compare(req.body.password, user.recordset[0].password)) {
                 req.session.loggedin = true;
                 req.session.username = username;
                 req.session.userid = user.recordset[0].userid;

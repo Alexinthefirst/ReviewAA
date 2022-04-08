@@ -1,187 +1,204 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,minimum-scale=1">
-		<title>ReviewAA - Packages</title>
-        <!-- the form awesome library is used to add icons to our form -->
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-        <!-- include the stylesheet file -->
-        <link href="/style.css" rel="stylesheet" type="text/css">
-        <!--icon-->
-		<link rel="icon" type="image/x-icon" href="img/small_logo_white.ico">
 
-        <style>
-			html{
-				background-color: #c8d8e4;
-			}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <title>ReviewAA - Packages</title>
+    <!-- the form awesome library is used to add icons to our form -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <!-- include the stylesheet file -->
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <!--icon-->
+    <link rel="icon" type="image/x-icon" href="img/small_logo_white.ico">
 
-			.nav ul {
-			list-style-type: none;
-			padding: 0;
-			overflow: hidden;
-			background-color: #65ac84;
-			}
+    <style>
+        html {
+            background-color: #c8d8e4;
+        }
 
-			.nav li {
-			float: left;
-			}
+        .nav ul {
+            list-style-type: none;
+            padding: 0;
+            overflow: hidden;
+            background-color: #65ac84;
+        }
 
-			.nav li a {
-			display: block;
-			color: white;
-			text-align: center;
-			padding: 14px 16px;
-			text-decoration: none;
-			}
+        .nav li {
+            float: left;
+        }
 
-			/* Change the link color to #111 (black) on hover */
-			li a:hover {
-			background-color: #35694c;
-			}
+        .nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
 
-			.disabled {
-			pointer-events: none;
-			cursor: default;
-			font-size: large;
-			}
+        /* Change the link color to #111 (black) on hover */
+        li a:hover {
+            background-color: #35694c;
+        }
 
-			.content {
-				background-color: #f2f2f2;
-				padding: 55px;
-                padding-top: 8px;
-                position: fixed;
-                height: 89%;
-                width: 99%;
-			}
-			.button {
-				background-color: #52ab98;
-				color: white;
-				padding: 10px 35px;
-				text-decoration: none;
-			}
-            .button:hover{
-				background-color: #327969;
-			}
+        .disabled {
+            pointer-events: none;
+            cursor: default;
+            font-size: large;
+        }
 
-            .trial {
-                background-color: #abbedb;
-                border: 2px solid black;
-                color:white;
-                display: block;
-                text-decoration: none;
-                padding-left: 25px;
-            }
+        .content {
+            background-color: #f2f2f2;
+            padding: 55px;
+            padding-top: 8px;
+            position: fixed;
+            height: 89%;
+            width: 99%;
+        }
 
-            .basic {
-                background-color: #52ab98;
-                border: 2px solid black;
-                color: white;
-                display: block;
-                text-decoration: none;
-                padding-left: 25px;
-            }
+        .button {
+            background-color: #52ab98;
+            color: white;
+            padding: 10px 35px;
+            text-decoration: none;
+        }
 
-            .advanced{
-                background-color: #2b6777;
-                border: 2px solid black;
-                color: white;
-                display: block;
-                text-decoration: none;
-                padding-left: 25px;
-            }
+        .button:hover {
+            background-color: #327969;
+        }
 
-            .trial, .basic, .advanced{
-                border: 2px solid black;
-                box-sizing:border-box;
-            }
+        .trial {
+            background-color: #abbedb;
+            border: 2px solid black;
+            color: white;
+            display: block;
+            text-decoration: none;
+            padding-left: 25px;
+        }
 
-            .trial li, .basic li, .advanced li{
-                font-size: 14px;
-            }
+        .basic {
+            background-color: #52ab98;
+            border: 2px solid black;
+            color: white;
+            display: block;
+            text-decoration: none;
+            padding-left: 25px;
+        }
 
-            .trial:hover, .basic:hover, .advanced:hover{
-                border: 3px solid black;
-                box-sizing:border-box;
-            }
-            /* .buyNow{
+        .advanced {
+            background-color: #2b6777;
+            border: 2px solid black;
+            color: white;
+            display: block;
+            text-decoration: none;
+            padding-left: 25px;
+        }
+
+        .trial,
+        .basic,
+        .advanced {
+            border: 2px solid black;
+            box-sizing: border-box;
+        }
+
+        .trial li,
+        .basic li,
+        .advanced li {
+            font-size: 14px;
+        }
+
+        .trial:hover,
+        .basic:hover,
+        .advanced:hover {
+            border: 3px solid black;
+            box-sizing: border-box;
+        }
+
+        /* .buyNow{
                 float: left;
             } */
-            
-		</style>
+    </style>
 
-	</head>
-	<body>
-        <div class="nav">
-			<ul>
-				<li><a class="active" href="/start">&#9665; Back</a></li>
-			</ul>
+</head>
+
+<body>
+    <div class="nav">
+        <ul>
+            <li><a class="active" href="/start">&#9665; Back</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+
+        <h1 style="font-size: large;">ReviewAA Packages:</h1>
+
+        <div>
+            <a href="/payment/3" class="trial">
+                <h1 style="font-size: 15px;">Free Trial</h1>
+                <ul>
+                    <li>Limited access to *all* ReviewAA features!</li>
+                    <li>Try it out and see if ReviewAA works for you!</li>
+                    <li>Free Trial expires in 7 days</li>
+                </ul>
+
+                <h1>Free - 7 day trial</h1>
+                <form class="buyNow" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="T59AVPYNKRLTU">
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0"
+                        name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1"
+                        height="1">
+                </form>
+            </a>
+        </div><br>
+
+
+        <div>
+            <a href="/payment/1" class="basic">
+                <h1 style="font-size: large;">Basic Reporting</h1>
+                <ul>
+                    <li>Base level reporting</li>
+                    <li>Many types of reports for your product's reviews</li>
+                    <li>See reviews on your competitor's products</li>
+                    <li>Easy to use dashboard for all your features</li>
+                </ul>
+
+                <h1>$4.99/month</h1>
+                <form class="buyNow" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="T59AVPYNKRLTU">
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0"
+                        name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1"
+                        height="1">
+                </form>
+            </a>
+        </div><br>
+
+
+        <div>
+            <a href="/payment/2" class="advanced">
+                <h1 style="font-size: large;">Advanced Reporting</h1>
+                <ul>
+                    <li>Advanced reporting systems</li>
+                    <li>View reports with fake review detection</li>
+                    <li>Counter against bot reviews left on your product</li>
+                    <li>Includes all features from the Basic package</li>
+                </ul>
+
+                <h1>$9.99/month</h1>
+                <form class="buyNow" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="T59AVPYNKRLTU">
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0"
+                        name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1"
+                        height="1">
+                </form>
+            </a>
         </div>
+    </div>
+</body>
 
-			<div class="content">
-
-                <h1 style="font-size: large;">ReviewAA Packages:</h1>
-
-                <div>
-                    <a href="/payment/3" class="trial">
-                        <h1 style="font-size: 15px;">Free Trial</h1>
-                        <ul>
-                            <li>Limited access to *all* ReviewAA features!</li>
-                            <li>Try it out and see if ReviewAA works for you!</li>
-                            <li>Free Trial expires in 7 days</li>
-                        </ul>
-
-                        <h1>Free - 7 day trial</h1>
-                        <form class="buyNow" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                            <input type="hidden" name="cmd" value="_s-xclick">
-                            <input type="hidden" name="hosted_button_id" value="T59AVPYNKRLTU">
-                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                        </form>
-                    </a>
-                </div><br>
-
-
-                <div>
-                    <a href="/payment/1" class="basic">
-                        <h1 style="font-size: large;">Basic Reporting</h1>
-                        <ul>
-                            <li>Base level reporting</li>
-                            <li>Many types of reports for your product's reviews</li>
-                            <li>See reviews on your competitor's products</li>
-                            <li>Easy to use dashboard for all your features</li>
-                        </ul>
-
-                        <h1>$4.99/month</h1>
-                        <form class="buyNow" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                            <input type="hidden" name="cmd" value="_s-xclick">
-                            <input type="hidden" name="hosted_button_id" value="T59AVPYNKRLTU">
-                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                        </form>
-                    </a>
-                </div><br>
-            
-
-                <div>
-                <a href="/payment/2" class="advanced">
-                    <h1 style="font-size: large;">Advanced Reporting</h1>
-                    <ul>
-                        <li>Advanced reporting systems</li>
-                        <li>View reports with fake review detection</li>
-                        <li>Counter against bot reviews left on your product</li>
-                        <li>Includes all features from the Basic package</li>
-                    </ul>
-
-                    <h1>$9.99/month</h1>
-                    <form class="buyNow" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="hosted_button_id" value="T59AVPYNKRLTU">
-                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                    </form>
-                </a>
-                </div>
-			</div>
-	</body>
 </html>
