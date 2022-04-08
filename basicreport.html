@@ -108,6 +108,43 @@
                 margin-top: 20px;
                 padding-bottom: 1px;
             }
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                border-color: #65ac84;
+            }
+            th, td {
+                width: 100px;
+            }
+            .topics {
+                margin: auto;
+                padding-top: 50px;
+                text-align: center;
+                width: 50%;
+            }
+            .recommendations {
+                margin: auto;
+                padding-top: 50px;
+                text-align: center;
+                width: 50%;
+            }
+            #container {
+                position: relative;
+            }
+            #fade {
+                position:absolute;
+                z-index:2;
+                right:0; bottom:0; left:0;
+                height:100%; /* adjust it to your needs */
+                background: url(data:image/svg+xml;base64,alotofcodehere);
+                background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(70%,rgba(255,255,255,1)));
+                background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%);
+                background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%);
+                background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%);
+                background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%);
+            }
+
         </style>
 	</head>
 	<body>
@@ -135,6 +172,27 @@
                     <canvas id="myChartLine"></canvas>
                 </div>
             </div>
+
+            <div id="container">
+                <div id="topics" class="topics">
+                    <h1>Popular Topics and Recommendations available in the Advanced Package</h1>
+                    <h1 style="font-size: 30px">Popular Topics:</h1>
+                    <table id="topicTable" style="width: 100%">
+                        <tr>
+                            <th>Topic</th>
+                            <th>Mentions</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="recommendations">
+                    <h1 style="font-size: 30px">Recommendations:</h1>
+                    <h1>Please wait while recommendations are analyzed</h1>
+                </div>
+                <div id="fade">  
+                </div>
+            </div>
+
             <div class="disclaimer">
                 <h3>All review data is aggregated from Google reviews</h3>
             </div>

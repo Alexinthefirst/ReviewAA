@@ -39,10 +39,95 @@ function dataSetup(){
             var cell2 = row.insertCell(1);
             cell1.innerText = topic.keyword
             cell2.innerText = topic.mentions
+
+            if(topic.keyword == "washroom" || topic.keyword == "bathroom"){
+                cell1.style="color:red;"
+                cell2.style="color:red;"
+            }
+            if(topic.keyword == "frozen"){
+                cell1.style="color:red;"
+                cell2.style="color:red;"
+            }
+            if(topic.keyword == "atmosphere"){
+                cell1.style="color:green;"
+                cell2.style="color:green;"
+            }
+            if(topic.keyword == "to go"){
+                cell1.style="color:green;"
+                cell2.style="color:green;"
+            }
+
             i++;
         }
-        
 
+        var washroom = false;
+        var frozen = false;
+        var atmosphere = false;
+        var togo = false;
+        var recoCount = 0;
+
+        for (const topic of data['topics']){
+            if (topic.keyword == "washroom" || topic.keyword == "bathroom"){
+                if (topic.mentions >= 5){
+                    washroom = true;
+                    recoCount++;
+                }
+            }
+            if (topic.keyword == "frozen"){
+                if (topic.mentions >= 5){
+                    frozen = true;
+                    recoCount++;
+                }
+            }
+            if (topic.keyword == "atmosphere"){
+                if (topic.mentions >= 5){
+                    atmosphere = true;
+                    recoCount++;
+                }
+            }
+            if (topic.keyword == "to go"){
+                if (topic.mentions >= 5){
+                    togo = true;
+                    recoCount++;
+                }
+            }
+        }
+        
+        if (washroom){
+            const para = document.createElement("p");
+            const node = document.createTextNode("Washroom sanitation could be improved.");
+            para.appendChild(node);
+
+            const element = document.getElementById("reco");
+            element.appendChild(para);
+        }
+        if (frozen){
+            const para = document.createElement("p");
+            const node = document.createTextNode("Cooking food fresh instead of from frozen would improve your ratings.");
+            para.appendChild(node);
+
+            const element = document.getElementById("reco");
+            element.appendChild(para);
+        }
+        if (atmosphere){
+            const para = document.createElement("p");
+            const node = document.createTextNode("The atmosphere is great, don't do anything to disturb it!");
+            para.appendChild(node);
+
+            const element = document.getElementById("reco");
+            element.appendChild(para);
+        }
+        if (togo){
+            const para = document.createElement("p");
+            const node = document.createTextNode("To Go orders are highly praised, keep that level of service up!");
+            para.appendChild(node);
+
+            const element = document.getElementById("reco");
+            element.appendChild(para);
+        }
+        if (recoCount > 0){
+            document.getElementById("recoWait").innerText = ""
+        }
 
     })
 }

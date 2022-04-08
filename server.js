@@ -268,6 +268,10 @@ app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname + '/register.html'));
 });
 
+app.get('/users/userplans', async (req, res) => {
+    res.json(await executeQuery(`Select * FROM userPlans WHERE userid = '${req.session.userid}'`))
+})
+
 // Used to get list of users, shouldn't be publicly accessible -- Will disable on production
 app.get('/users', async (req, res) => {
     res.statusCode = 403;
