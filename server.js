@@ -137,6 +137,7 @@ app.get('/currentUsername', async (req, res) => {
 
 app.get('/currentPlan', async (req, res) => {
     var data = await executeQuery(`SELECT TOP 1 * FROM userPlans LEFT JOIN paymentPlans ON userPlans.planid = paymentPlans.planId WHERE userid =  ${req.session.userid} AND dateExpiry > CURRENT_TIMESTAMP ORDER BY dateSubscribed DESC`)
+    console.log(data)
     res.json(data);
 
 })
@@ -212,18 +213,29 @@ app.post('/paymentResult', async (req, res) => {
         partialCardNumber = partialCardNumber.substring(partialCardNumber.length - 4);
 
         // Log payment result in database
+        console.log("1")
         await executeQuery(`INSERT INTO paymentLog VALUES ('${req.body.fullName}', '${req.body.email}', '${req.body.nameOnCard}', '${partialCardNumber}', ${req.body.expMonth},
             ${req.body.expYear}, ${req.body.cvv}, CURRENT_TIMESTAMP, ${req.session.userid}, '${req.body.result}', ${req.session.planToBuy})`);
 
         //If purchase is successful, add record to userPlan table
         if (req.body.result == "Payment success") {
 
+            console.log("2")
             var plan = await executeQuery(`SELECT * FROM paymentPlans WHERE planId = ${req.session.planToBuy}`);
             var duration = plan.recordset[0].duration;
             var name = plan.recordset[0].name;
             console.log("d" + duration);
 
-            await executeQuery(`INSERT INTO userPlans VALUES (${req.session.userid}, ${req.session.planToBuy}, CURRENT_TIMESTAMP, DATEADD(day, ${duration} , CURRENT_TIMESTAMP))`);
+            var userId = await executeQuery(`SELECT * FROM userPlans WHERE userId = ${req.session.userid}`)
+
+            console.log("userID: " + userId.recordset[0])
+
+            if (userId.recordset[0] != undefined)
+                await executeQuery(`UPDATE userPlans SET planId = ${req.session.planToBuy}, dateSubscribed = CURRENT_TIMESTAMP, dateExpiry = DATEADD(day, ${duration} , CURRENT_TIMESTAMP)`);
+            else {
+                await executeQuery(`INSERT INTO userPlans VALUES (${req.session.userid}, ${req.session.planToBuy}, CURRENT_TIMESTAMP, DATEADD(day, ${duration} , CURRENT_TIMESTAMP))`);
+            }
+            
             // unset planToBuy after successful purchase
             req.session.planToBuy = null;
             req.session.plan = name;

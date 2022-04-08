@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     // Your code to run since DOM is loaded and ready
     getCurrentUsername();
-    getCurrentPlan();
+    
     getPlan();
 });
 
@@ -17,15 +17,11 @@ function getCurrentUsername() {
         }).then(function (data) {
             var username = data.recordset[0].username;
             addUsernameToHeader(username);
+            getCurrentPlan();
         })
 }
 
 function getCurrentPlan() {
-            changeTitleHeader(username);
-        })
-}
-
-function getPlan() {
     const options = {
         method: "GET",
         mode: "no-cors",
@@ -42,6 +38,16 @@ function getPlan() {
             }
 
             addPlanToHeader(planName);
+        })
+        
+}
+
+function getPlan() {
+    const options = {
+        method: "GET",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" }
+    }
     fetch('http://localhost:8000/users/userplans', options)
         .then(function (response) {
             return response.json();
@@ -53,9 +59,8 @@ function getPlan() {
                 document.getElementById('advanced').classList.add("grayout")
                 document.getElementById('advancedP').innerText = "Available with Advanced plan"
             }
-        })
-}
-
+        });
+    }
 
 
 function addUsernameToHeader(username) {
