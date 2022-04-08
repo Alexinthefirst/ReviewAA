@@ -135,6 +135,19 @@ app.get('/currentUsername', async (req, res) => {
 
 })
 
+app.get('/currentPlan', async (req, res) => {
+    var data = await executeQuery(`SELECT TOP 1 * FROM userPlans LEFT JOIN paymentPlans ON userPlans.planid = paymentPlans.planId WHERE userid =  ${req.session.userid} AND dateExpiry > CURRENT_TIMESTAMP ORDER BY dateSubscribed DESC`)
+    res.json(data);
+
+})
+
+
+app.get('/planDetails', async (req, res) => {
+    var data = await executeQuery(`SELECT * FROM paymentPlans WHERE planId = ${req.session.planToBuy}`);
+    res.json(data);
+
+})
+
 // Return the last login for every user
 app.get('/loginsLast', async (req, res) => {
     var logins = await executeQuery(`SELECT userid, ratingAtLogin, loginDate FROM logins WHERE userid = ${req.session.userid}`)
@@ -155,24 +168,72 @@ app.get('/start', (req, res) => {
 // Packages page route
 app.get('/packages', (req, res) => {
     res.sendFile(path.join(__dirname + '/packages.html'));
-
 })
 
 // Payment page route
 app.get('/payment/:package', async (req, res) => {
     if (req.session.loggedin) {
-        // Move where this happens after payment processing is implemented
-        let ts = Date.now();
-
-        let date_ob = new Date(ts);
-        let date = date_ob.getDate();
-        let month = date_ob.getMonth() + 1;
-        let year = date_ob.getFullYear();
-        var datefinal = year + "-" + month + "-" + date;
-
-        //Saves plan selection to database for later use
-        await executeQuery(`INSERT INTO userPlans VALUES (${req.session.userid}, ${req.params["package"]}, '${datefinal}')`)
+        req.session.planToBuy = req.params["package"];
         res.sendFile(path.join(__dirname + '/payment.html'));
+    } else {
+        res.redirect('/login')
+    }
+
+})
+
+// app.post('/users/update', async (req, res) => {
+//     if (req.body.username != "" && req.body.email != ""){
+//         await executeQuery(`UPDATE accounts SET username = '${req.body.username}', email = '${req.body.email}' WHERE userid = ${req.session.userid}`)
+//     } else if (req.body.email == ""){
+//         await executeQuery(`UPDATE accounts SET username = '${req.body.username}' WHERE userid = ${req.session.userid}`)
+//     } else if (req.body.username == ""){
+//         await executeQuery(`UPDATE accounts SET email = '${req.body.email}' WHERE userid = ${req.session.userid}`)
+//     }
+
+//     // Change Password
+//     if (req.body.password != "" && req.body.password2 != ""){
+//         if (req.body.password == req.body.password2) {
+//             // Hash and salt password
+//             const hashPassword = await bcrypt.hash(req.body.password, 10)
+//             await executeQuery(`UPDATE accounts SET password = '${hashPassword}' WHERE userid = ${req.session.userid}`)
+//         }
+//     }
+//     res.redirect('/profile')
+
+
+// });
+
+app.post('/paymentResult', async (req, res) => {
+    if (req.session.loggedin) {
+
+        // Convert card number to string, trim leading and trailing double quotes, then only save last 4 numbers of card for security reasons
+        var partialCardNumber = JSON.stringify(req.body.cardNumber);
+        partialCardNumber = partialCardNumber.slice(1, -1);
+        partialCardNumber = partialCardNumber.substring(partialCardNumber.length - 4);
+
+        // Log payment result in database
+        await executeQuery(`INSERT INTO paymentLog VALUES ('${req.body.fullName}', '${req.body.email}', '${req.body.nameOnCard}', '${partialCardNumber}', ${req.body.expMonth},
+            ${req.body.expYear}, ${req.body.cvv}, CURRENT_TIMESTAMP, ${req.session.userid}, '${req.body.result}', ${req.session.planToBuy})`);
+
+        //If purchase is successful, add record to userPlan table
+        if (req.body.result == "Payment success") {
+
+            var plan = await executeQuery(`SELECT * FROM paymentPlans WHERE planId = ${req.session.planToBuy}`);
+            var duration = plan.recordset[0].duration;
+            var name = plan.recordset[0].name;
+            console.log("d" + duration);
+
+            await executeQuery(`INSERT INTO userPlans VALUES (${req.session.userid}, ${req.session.planToBuy}, CURRENT_TIMESTAMP, DATEADD(day, ${duration} , CURRENT_TIMESTAMP))`);
+            // unset planToBuy after successful purchase
+            req.session.planToBuy = null;
+            req.session.plan = name;
+
+            res.sendFile(path.join(__dirname + '/paymentSuccess.html'));
+        } else {
+            console.log("redirect back");
+            res.sendFile(path.join(__dirname + '/paymentFailed.html'));
+        }
+
     } else {
         res.redirect('/login')
     }
@@ -206,6 +267,7 @@ app.get('/basicreport', (req, res) => {
     }
 })
 
+// Advanced report page route
 app.get('/advancedreport', (req, res) => {
     if (req.session.loggedin) {
 
@@ -370,6 +432,21 @@ app.post('/users/login', async (req, res) => {
 
                 // Insert the login time to database
                 await executeQuery(`INSERT INTO logins VALUES (${user.recordset[0].userid}, 4.2, '${dateString}')`)
+
+                // Check for user's plan
+                // TODO
+                var plan = await executeQuery(`SELECT TOP 1 * FROM userPlans LEFT JOIN paymentPlans ON userPlans.planid = paymentPlans.planId WHERE userid = ${user.recordset[0].userid} AND dateExpiry > CURRENT_TIMESTAMP ORDER BY dateSubscribed DESC`)
+                // Will return either 1 record with with name field describing plan OR no records meaning no active plan
+                // Set a session var for plan
+                if (plan.recordset.length > 0) {
+                    req.session.plan = plan.recordset[0].name;
+                    // req.session.plan = "test";
+                } else {
+                    req.session.plan = "No Plan";
+                }
+                console.log(req.session.plan);
+
+                // Redirect to dashboard
                 res.redirect('/dashboard')
             } else {
                 res.send("Cannot find user.")
