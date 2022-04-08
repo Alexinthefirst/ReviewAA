@@ -24,6 +24,11 @@ body {
   border-bottom: 1px solid #dee0e4;
 }
 
+
+.grayout {
+  opacity: 0.6;
+}
+
 .login form {
   display: flex;
   flex-wrap: wrap;

@@ -39,10 +39,95 @@ function dataSetup() {
                 var cell2 = row.insertCell(1);
                 cell1.innerText = topic.keyword
                 cell2.innerText = topic.mentions
+
+                if (topic.keyword == "washroom" || topic.keyword == "bathroom") {
+                    cell1.style = "color:red;"
+                    cell2.style = "color:red;"
+                }
+                if (topic.keyword == "frozen") {
+                    cell1.style = "color:red;"
+                    cell2.style = "color:red;"
+                }
+                if (topic.keyword == "atmosphere") {
+                    cell1.style = "color:green;"
+                    cell2.style = "color:green;"
+                }
+                if (topic.keyword == "to go") {
+                    cell1.style = "color:green;"
+                    cell2.style = "color:green;"
+                }
+
                 i++;
             }
 
+            var washroom = false;
+            var frozen = false;
+            var atmosphere = false;
+            var togo = false;
+            var recoCount = 0;
 
+            for (const topic of data['topics']) {
+                if (topic.keyword == "washroom" || topic.keyword == "bathroom") {
+                    if (topic.mentions >= 5) {
+                        washroom = true;
+                        recoCount++;
+                    }
+                }
+                if (topic.keyword == "frozen") {
+                    if (topic.mentions >= 5) {
+                        frozen = true;
+                        recoCount++;
+                    }
+                }
+                if (topic.keyword == "atmosphere") {
+                    if (topic.mentions >= 5) {
+                        atmosphere = true;
+                        recoCount++;
+                    }
+                }
+                if (topic.keyword == "to go") {
+                    if (topic.mentions >= 5) {
+                        togo = true;
+                        recoCount++;
+                    }
+                }
+            }
+
+            if (washroom) {
+                const para = document.createElement("p");
+                const node = document.createTextNode("Washroom sanitation could be improved.");
+                para.appendChild(node);
+
+                const element = document.getElementById("reco");
+                element.appendChild(para);
+            }
+            if (frozen) {
+                const para = document.createElement("p");
+                const node = document.createTextNode("Cooking food fresh instead of from frozen would improve your ratings.");
+                para.appendChild(node);
+
+                const element = document.getElementById("reco");
+                element.appendChild(para);
+            }
+            if (atmosphere) {
+                const para = document.createElement("p");
+                const node = document.createTextNode("The atmosphere is great, don't do anything to disturb it!");
+                para.appendChild(node);
+
+                const element = document.getElementById("reco");
+                element.appendChild(para);
+            }
+            if (togo) {
+                const para = document.createElement("p");
+                const node = document.createTextNode("To Go orders are highly praised, keep that level of service up!");
+                para.appendChild(node);
+
+                const element = document.getElementById("reco");
+                element.appendChild(para);
+            }
+            if (recoCount > 0) {
+                document.getElementById("recoWait").innerText = ""
+            }
 
         })
 }
@@ -130,11 +215,41 @@ function getLastRating() {
 function buildDateChart(data) {
     var date = new Date()
 
+    // Hacky way to fix new registered users
+    if (data.recordset[0] === undefined) {
+        const ctxLine = document.getElementById('myChartLine').getContext('2d');
+        const myChartLine = new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['April ' + date.getDate(), 'May ' + date.getDate(), 'June ' + date.getDate(), 'July ' + date.getDate(), 'August ' + date.getDate(), 'September ' + date.getDate(), 'October ' + date.getDate(), 'November ' + date.getDate(), 'December ' + date.getDate(), 'January ' + date.getDate(), 'February ' + date.getDate(), 'March ' + date.getDate(), 'April ' + date.getDate()],
+                datasets: [{
+                    label: 'Change',
+                    data: /*data*/[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4.1],
+                    fill: true,
+                    backgroundColor: [
+                        'rgba(102, 255, 102, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(102, 255, 102, 1)',
+                    ],
+                    tension: 0
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
     const ctxLine = document.getElementById('myChartLine').getContext('2d');
     const myChartLine = new Chart(ctxLine, {
         type: 'line',
         data: {
-            labels: ['March ' + date.getDate(), 'April ' + date.getDate(), 'May ' + date.getDate(), 'June ' + date.getDate(), 'July ' + date.getDate(), 'August ' + date.getDate(), 'September ' + date.getDate(), 'October ' + date.getDate(), 'November ' + date.getDate(), 'December ' + date.getDate(), 'January ' + date.getDate(), 'February ' + date.getDate(), 'March ' + date.getDate()],
+            labels: ['April ' + date.getDate(), 'May ' + date.getDate(), 'June ' + date.getDate(), 'July ' + date.getDate(), 'August ' + date.getDate(), 'September ' + date.getDate(), 'October ' + date.getDate(), 'November ' + date.getDate(), 'December ' + date.getDate(), 'January ' + date.getDate(), 'February ' + date.getDate(), 'March ' + date.getDate(), 'April ' + date.getDate()],
             datasets: [{
                 label: 'Change',
                 data: /*data*/[data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[0].rating, data.recordset[1].rating, data.recordset[2].rating, data.recordset[3].rating, data.recordset[4].rating],
