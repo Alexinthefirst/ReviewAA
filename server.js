@@ -19,6 +19,10 @@ const PORT = process.env.PORT || 8000; // Port setup
 
 const users = [] // For testing, not used
 
+function addSlashes(str) {
+    return (str).replace("'", "''");
+}
+
 // Session setup
 app.use(session({
     secret: 'reviewAbA',
@@ -109,8 +113,10 @@ app.post('/dataid', (req, res) => {
         }
         else {
             var place = data['place_results'];
-            console.log(place.data_id)
+            //console.log(place.data_id)
             executeQuery(`UPDATE accounts SET dataid = '${place.data_id}' WHERE userid = ${req.session.userid}`)
+
+            executeQuery(`INSERT INTO businessInfo VALUES (${req.session.userid}, '${addSlashes(place.title)}', '${addSlashes(place.address)}', ${place.rating}, ${place.reviews});`)
             if (req.session.firstTimeLogin) {
                 res.redirect('/basicreport')
             } else {
