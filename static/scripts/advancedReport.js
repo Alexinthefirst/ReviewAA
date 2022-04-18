@@ -56,6 +56,46 @@ function dataSetup() {
                     cell1.style = "color:green;"
                     cell2.style = "color:green;"
                 }
+                if (topic.keyword == "thursday") {
+                    cell1.style = "color:green;"
+                    cell2.style = "color:green;"
+                }
+                if (topic.keyword == "waitress") {
+                    cell1.style = "color:green;"
+                    cell2.style = "color:green;"
+                }
+                if (topic.keyword == "game") {
+                    cell1.style = "color:green;"
+                    cell2.style = "color:green;"
+                }
+                if (topic.keyword == "wing") {
+                    cell1.style = "color:green;"
+                    cell2.style = "color:green;"
+                }
+                if (topic.keyword == "fish and chips") {
+                    cell1.style = "color:red;"
+                    cell2.style = "color:red;"
+                }
+                if (topic.keyword == "sports") {
+                    cell1.style = "color:green;"
+                    cell2.style = "color:green;"
+                }
+                if (topic.keyword == "hockey") {
+                    cell1.style = "color:green;"
+                    cell2.style = "color:green;"
+                }
+                if (topic.keyword == "nachos") {
+                    cell1.style = "color:green;"
+                    cell2.style = "color:green;"
+                }
+                if (topic.keyword == "discount") {
+                    cell1.style = "color:green;"
+                    cell2.style = "color:green;"
+                }
+                if (topic.keyword == "sauce") {
+                    cell1.style = "color:green;"
+                    cell2.style = "color:green;"
+                }
 
                 i++;
             }
@@ -71,60 +111,162 @@ function dataSetup() {
                     if (topic.mentions >= 5) {
                         washroom = true;
                         recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("Washroom sanitation could be improved.");
+                        para.appendChild(node);
+        
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
                     }
                 }
                 if (topic.keyword == "frozen") {
                     if (topic.mentions >= 5) {
                         frozen = true;
                         recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("Cooking food fresh instead of from frozen would improve your ratings.");
+                        para.appendChild(node);
+        
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
                     }
                 }
                 if (topic.keyword == "atmosphere") {
                     if (topic.mentions >= 5) {
                         atmosphere = true;
                         recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("The atmosphere is great, don't do anything to disturb it!");
+                        para.appendChild(node);
+
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
                     }
                 }
                 if (topic.keyword == "to go") {
                     if (topic.mentions >= 5) {
                         togo = true;
                         recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("To Go orders are highly praised, keep that level of service up!");
+                        para.appendChild(node);
+        
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
+                    }
+                }
+                if (topic.keyword == "thursday") {
+                    if (topic.mentions >= 5) {
+                        recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("Thursday nights are big for business with your wings discount!");
+                        para.appendChild(node);
+
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
+                    }
+                }
+                if (topic.keyword == "waitress") {
+                    if (topic.mentions >= 5) {
+                        recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("Wait staff is highly rated!");
+                        para.appendChild(node);
+
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
+                    }
+                }
+                if (topic.keyword == "game") {
+                    if (topic.mentions >= 5) {
+                        recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("People love watching games here, keep those on the television.");
+                        para.appendChild(node);
+
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
+                    }
+                }
+                if (topic.keyword == "wing") {
+                    if (topic.mentions >= 5) {
+                        recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("Wings are one of the hottest items you have, make sure you keep them stocked!");
+                        para.appendChild(node);
+
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
+                    }
+                }
+                if (topic.keyword == "sauce") {
+                    if (topic.mentions >= 5) {
+                        recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("The wing sauce variety and quality is highly rated!");
+                        para.appendChild(node);
+
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
+                    }
+                }
+                if (topic.keyword == "fish and chips") {
+                    if (topic.mentions >= 5) {
+                        recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("Reviews for the fish and chips could be better, maybe try a new recipe or remove it.");
+                        para.appendChild(node);
+
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
+                    }
+                }
+                if (topic.keyword == "sports") {
+                    if (topic.mentions >= 5) {
+                        recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("Sports are great for your place.");
+                        para.appendChild(node);
+
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
+                    }
+                }
+                if (topic.keyword == "hockey") {
+                    if (topic.mentions >= 5) {
+                        recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("Hockey is a huge hit, keep showing it.");
+                        para.appendChild(node);
+
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
+                    }
+                }
+                if (topic.keyword == "discount") {
+                    if (topic.mentions >= 5) {
+                        recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("The discount from thursday night wings is great, keep doing that!");
+                        para.appendChild(node);
+
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
+                    }
+                }
+                if (topic.keyword == "nachos") {
+                    if (topic.mentions >= 5) {
+                        recoCount++;
+                        const para = document.createElement("p");
+                        const node = document.createTextNode("The people are loving your take on nachos!");
+                        para.appendChild(node);
+
+                        const element = document.getElementById("reco");
+                        element.appendChild(para);
                     }
                 }
             }
 
-            if (washroom) {
-                const para = document.createElement("p");
-                const node = document.createTextNode("Washroom sanitation could be improved.");
-                para.appendChild(node);
-
-                const element = document.getElementById("reco");
-                element.appendChild(para);
-            }
-            if (frozen) {
-                const para = document.createElement("p");
-                const node = document.createTextNode("Cooking food fresh instead of from frozen would improve your ratings.");
-                para.appendChild(node);
-
-                const element = document.getElementById("reco");
-                element.appendChild(para);
-            }
-            if (atmosphere) {
-                const para = document.createElement("p");
-                const node = document.createTextNode("The atmosphere is great, don't do anything to disturb it!");
-                para.appendChild(node);
-
-                const element = document.getElementById("reco");
-                element.appendChild(para);
-            }
-            if (togo) {
-                const para = document.createElement("p");
-                const node = document.createTextNode("To Go orders are highly praised, keep that level of service up!");
-                para.appendChild(node);
-
-                const element = document.getElementById("reco");
-                element.appendChild(para);
-            }
             if (recoCount > 0) {
                 document.getElementById("recoWait").innerText = ""
             }

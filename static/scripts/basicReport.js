@@ -20,6 +20,7 @@ function dataSetup() {
         .then(function (response) {
             return response.json();
         }).then(function (data) {
+            console.log(data)
             getData(data)
 
             document.getElementById('businessName').innerText = 'Basic Report for ' + data['place_info'].title
